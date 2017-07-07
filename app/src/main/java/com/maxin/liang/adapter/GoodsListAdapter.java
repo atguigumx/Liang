@@ -12,11 +12,14 @@ import com.bumptech.glide.Glide;
 import com.maxin.liang.R;
 import com.maxin.liang.activity.GoodsInfoActivity;
 import com.maxin.liang.bean.shop.GoodsListBean;
+import com.maxin.liang.utils.NetConfig;
 
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+
+import static com.maxin.liang.fragment.shopfragment.TypeFragment.POSITION;
 
 /**
  * Created by shkstart on 2017/7/6.
@@ -72,7 +75,7 @@ public class GoodsListAdapter extends RecyclerView.Adapter<GoodsListAdapter.Myvi
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(context, GoodsInfoActivity.class);
-                    intent.putExtra(POSITIONID,items.get(getLayoutPosition()).getGoods_id());
+                    intent.putExtra(POSITION, NetConfig.BRAND_GOODS_DETAILS_URL +items.get(getLayoutPosition()).getGoods_id());
                     context.startActivity(intent);
                 }
             });

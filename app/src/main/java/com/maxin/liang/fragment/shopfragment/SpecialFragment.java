@@ -3,17 +3,26 @@ package com.maxin.liang.fragment.shopfragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
 
-import com.bumptech.glide.Glide;
+import com.alibaba.fastjson.JSONObject;
 import com.maxin.liang.R;
+import com.maxin.liang.adapter.SpecialAdapter;
+import com.maxin.liang.bean.shop.SpecialBean;
+import com.maxin.liang.utils.NetConfig;
+import com.zhy.http.okhttp.OkHttpUtils;
+import com.zhy.http.okhttp.callback.StringCallback;
+
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import okhttp3.Call;
 
 /**
  * Created by shkstart on 2017/7/6.
@@ -21,26 +30,41 @@ import butterknife.ButterKnife;
 
 public class SpecialFragment extends Fragment {
 
-
-    @Bind(R.id.iv_specialfragment)
-    ImageView ivSpecialfragment;
-    @Bind(R.id.relative)
-    RelativeLayout relative;
+    @Bind(R.id.recyclerView_specialfragment)
+    RecyclerView recyclerViewSpecialfragment;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = View.inflate(getActivity(), R.layout.special_fragment, null);
         ButterKnife.bind(this, view);
-        String url = "http://imgs-qn.iliangcang.com/ware/appimg/topic/cover/1926_.jpg?_t=1495105089";
-        Glide.with(getActivity()).load(url).into(ivSpecialfragment);
-        relative.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        getDataFromNet();
+        return view;
+    }
 
+    private void getDataFromNet() {
+        OkHttpUtils.get().url(NetConfig.TOPIC_URL).build().execute(new StringCallback() {
+            @Override
+            public void onError(Call call, Exception e, int id) {
+                Log.e("SpecialFragment", "onError" + e.getMessage());
+            }
+
+            @Override
+            public void onResponse(String response, int id) {
+                processData(response);
             }
         });
-        return view;
+    }
+
+    private void processData(String response) {
+        SpecialBean specialBean = JSONObject.parseObject(response, SpecialBean.class);
+        List<SpecialBean.DataBean.ItemsBean> items = specialBean.getData().getItems();
+        if (items != null && items.size() > 0) {
+            SpecialAdapter adapter = new SpecialAdapter(getActivity(), items);
+            recyclerViewSpecialfragment.setAdapter(adapter);
+            GridLayoutManager manager = new GridLayoutManager(getActivity(), 1);
+            recyclerViewSpecialfragment.setLayoutManager(manager);
+        }
     }
 
     @Override
