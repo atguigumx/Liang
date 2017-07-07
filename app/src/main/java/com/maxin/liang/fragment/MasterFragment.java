@@ -3,17 +3,27 @@ package com.maxin.liang.fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSONObject;
 import com.maxin.liang.R;
+import com.maxin.liang.adapter.MasterFragmentAdapter;
+import com.maxin.liang.bean.master.MasterBean;
+import com.zhy.http.okhttp.OkHttpUtils;
+import com.zhy.http.okhttp.callback.StringCallback;
+
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import okhttp3.Call;
 
 /**
  * Created by shkstart on 2017/7/6.
@@ -28,6 +38,7 @@ public class MasterFragment extends Fragment {
     ImageView ivTitleShopcart;
     @Bind(R.id.recyclerview_masterfragment)
     RecyclerView recyclerviewMasterfragment;
+    private MasterFragmentAdapter adapter;
 
     @Nullable
     @Override
@@ -41,6 +52,28 @@ public class MasterFragment extends Fragment {
 
     private void getDataFromNet() {
         String url="http://mobile.iliangcang.com/user/masterList?app_key=Android&count=18&page=1&sig=BF287AF953103F390674E73DDA18CFD8|639843030233268&v=1.0";
+        OkHttpUtils.get().url(url).build().execute(new StringCallback() {
+            @Override
+            public void onError(Call call, Exception e, int id) {
+                Log.e("MasterFragment", "onError"+e.getMessage());
+            }
+
+            @Override
+            public void onResponse(String response, int id) {
+                processData(response);
+            }
+        });
+    }
+
+    private void processData(String response) {
+        MasterBean masterBean = JSONObject.parseObject(response, MasterBean.class);
+        List<MasterBean.DataBean.ItemsBean> items = masterBean.getData().getItems();
+        if(items.size()>0&&items!=null) {
+            adapter = new MasterFragmentAdapter(getActivity(),items);
+            recyclerviewMasterfragment.setAdapter(adapter);
+            GridLayoutManager manager = new GridLayoutManager(getActivity(), 3);
+            recyclerviewMasterfragment.setLayoutManager(manager);
+        }
     }
 
     @Override
