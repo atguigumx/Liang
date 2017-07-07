@@ -47,6 +47,7 @@ public class GoodsListActivity extends BaseActivity {
             Constants.XIEBAO,
             Constants.PEISHI,
             Constants.MEIHU,
+            Constants.HUWAI,
             Constants.ZHIWU,
             Constants.TUSHU,
             Constants.LIWU,
@@ -98,6 +99,7 @@ public class GoodsListActivity extends BaseActivity {
             recyclerview.setLayoutManager(manager);
             recyclerview.setAdapter(adapter);
         }
+
     }
 
     private void getData() {
