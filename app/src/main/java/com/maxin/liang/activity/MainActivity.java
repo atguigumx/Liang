@@ -54,10 +54,10 @@ public class MainActivity extends BaseActivity {
                         position=1;
                         break;
                     case R.id.rb_main_nb:
-                        position=3;
+                        position=2;
                         break;
                     case R.id.rb_main_share :
-                        position=2;
+                        position=3;
                         break;
                     case R.id.rb_main_my :
                         position=4;

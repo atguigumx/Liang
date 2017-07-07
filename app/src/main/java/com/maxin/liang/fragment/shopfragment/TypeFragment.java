@@ -18,6 +18,7 @@ import com.bumptech.glide.Glide;
 import com.maxin.liang.R;
 import com.maxin.liang.activity.GoodsListActivity;
 import com.maxin.liang.bean.shop.TypeBean;
+import com.maxin.liang.utils.Constants;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
@@ -37,7 +38,27 @@ public class TypeFragment extends Fragment {
     GridView typeGrid;
     private List<TypeBean.DataBean.ItemsBean> items;
     private MyGridAdapter adapter;
-
+    private String[] urls = new String[]{
+            Constants.JIAJU1,
+            Constants.JIAJU2,
+            Constants.WENJU,
+            Constants.SHUMA,
+            Constants.WANLE,
+            Constants.CHUWEI,
+            Constants.MEISHI,
+            Constants.NANZHUANG,
+            Constants.NVZHUANG,
+            Constants.TONGZHUANG,
+            Constants.XIEBAO,
+            Constants.PEISHI,
+            Constants.MEIHU,
+            Constants.HUWAI,
+            Constants.ZHIWU,
+            Constants.TUSHU,
+            Constants.LIWU,
+            Constants.TUIJIAN,
+            Constants.YISHU
+    };
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -53,7 +74,7 @@ public class TypeFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent(getActivity(), GoodsListActivity.class);
-                intent.putExtra(POSITION,i);
+                intent.putExtra(POSITION,urls[i]);
                 startActivity(intent);
             }
         });

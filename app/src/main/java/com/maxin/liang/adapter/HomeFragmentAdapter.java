@@ -28,6 +28,7 @@ public class HomeFragmentAdapter extends RecyclerView.Adapter {
 
 
 
+
     public HomeFragmentAdapter(Context context, List<HomeBean.DataBean.ItemsBean.ListBean> list) {
         this.context = context;
         this.items = list;
@@ -81,14 +82,17 @@ public class HomeFragmentAdapter extends RecyclerView.Adapter {
         @Bind(R.id.onehomefragment_iv)
         ImageView onehomefragmentIv;
         private final Context context;
+        private String topic_url;
 
-        public OneTypeViewHolder(Context context, View itemView) {
+        public OneTypeViewHolder(final Context context, View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
             this.context = context;
+
         }
 
         public void setData(HomeBean.DataBean.ItemsBean.ListBean listBean) {
+            topic_url = listBean.getOne().getTopic_url();
             Glide.with(context).load(listBean.getOne().getPic_url()).into(onehomefragmentIv);
             onehomefragmentIv.setOnClickListener(new View.OnClickListener() {
                 @Override

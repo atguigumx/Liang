@@ -10,7 +10,6 @@ import com.alibaba.fastjson.JSON;
 import com.maxin.liang.R;
 import com.maxin.liang.adapter.GoodsListAdapter;
 import com.maxin.liang.bean.shop.GoodsListBean;
-import com.maxin.liang.utils.Constants;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
@@ -32,30 +31,11 @@ public class GoodsListActivity extends BaseActivity {
     TextView tvTitle;
     @Bind(R.id.iv_title_shopcart)
     ImageView ivTitleShopcart;
-    private int position;
-    private String[] urls = new String[]{
-            Constants.JIAJU1,
-            Constants.JIAJU2,
-            Constants.WENJU,
-            Constants.SHUMA,
-            Constants.WANLE,
-            Constants.CHUWEI,
-            Constants.MEISHI,
-            Constants.NANZHUANG,
-            Constants.NVZHUANG,
-            Constants.TONGZHUANG,
-            Constants.XIEBAO,
-            Constants.PEISHI,
-            Constants.MEIHU,
-            Constants.HUWAI,
-            Constants.ZHIWU,
-            Constants.TUSHU,
-            Constants.LIWU,
-            Constants.TUIJIAN,
-            Constants.YISHU,
-    };
+
+
     private List<GoodsListBean.DataBean.ItemsBean> items;
     private GoodsListAdapter adapter;
+    private String murl;
 
 
     @Override
@@ -72,7 +52,7 @@ public class GoodsListActivity extends BaseActivity {
     @Override
     public void initData() {
         getData();
-        getDataFromNet(urls[position]);
+        getDataFromNet(murl);
     }
 
     private void getDataFromNet(String url) {
@@ -103,7 +83,7 @@ public class GoodsListActivity extends BaseActivity {
     }
 
     private void getData() {
-        position = getIntent().getIntExtra(POSITION,0);
+        murl = getIntent().getStringExtra(POSITION);
     }
 
     @Override
