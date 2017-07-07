@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:id="@+id/main_fl">
+
+    </FrameLayout>
+    <RadioGroup
+        android:id="@+id/rg_main"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:gravity="center"
+        android:background="@android:color/black"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/rb_main_shop"
+            android:checked="true"
+            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:button="@null"
+            android:drawableTop="@drawable/shop_selector"
+            android:gravity="center"
+            android:text="商店"
+            android:textSize="10dp"
+            android:textColor="@drawable/text_selector"
+            />
+
+        <RadioButton
+            android:id="@+id/rb_main_magzine"
+            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:button="@null"
+            android:drawableTop="@drawable/mgz_selector"
+            android:gravity="center"
+            android:text="杂志"
+            android:textSize="10dp"
+            android:textColor="@drawable/text_selector"
+
+            />
+        <RadioButton
+            android:id="@+id/rb_main_nb"
+            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:button="@null"
+            android:drawableTop="@drawable/nb_selector"
+            android:gravity="center"
+            android:text="达人"
+            android:textSize="10dp"
+            android:textColor="@drawable/text_selector"
+             />
+        <RadioButton
+            android:id="@+id/rb_main_share"
+            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:button="@null"
+            android:drawableTop="@drawable/share_selector"
+            android:gravity="center"
+            android:text="分享"
+            android:textSize="10dp"
+            android:textColor="@drawable/text_selector"
+             />
+
+        <RadioButton
+            android:id="@+id/rb_main_my"
+            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:button="@null"
+            android:drawableTop="@drawable/my_selector"
+            android:gravity="center"
+            android:text="个人"
+            android:textSize="10dp"
+            android:textColor="@drawable/text_selector"
+
+             />
+    </RadioGroup>
+
+</LinearLayout>
