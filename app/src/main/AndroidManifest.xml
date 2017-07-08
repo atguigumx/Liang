@@ -21,7 +21,8 @@
         <activity android:name=".activity.MainActivity" />
         <activity android:name=".activity.GoodsListActivity" />
         <activity android:name=".activity.GoodsInfoActivity" />
-        <activity android:name=".activity.WebViewActivity"></activity>
+        <activity android:name=".activity.WebViewActivity" />
+        <activity android:name=".activity.MasterItemActivity"></activity>
     </application>
 
 </manifest>

@@ -1,6 +1,7 @@
 package com.maxin.liang.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.maxin.liang.R;
+import com.maxin.liang.activity.MasterItemActivity;
 import com.maxin.liang.bean.master.MasterBean;
 
 import java.util.List;
@@ -22,6 +24,7 @@ import butterknife.ButterKnife;
 
 public class MasterFragmentAdapter extends RecyclerView.Adapter<MasterFragmentAdapter.MyViewHorlder> {
 
+    public static final String MASTER_ID = "master_id";
     private final Context context;
     private final List<MasterBean.DataBean.ItemsBean> items;
 
@@ -59,6 +62,14 @@ public class MasterFragmentAdapter extends RecyclerView.Adapter<MasterFragmentAd
         public MyViewHorlder(View itemView) {
             super(itemView);
             ButterKnife.bind(this,itemView);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(context, MasterItemActivity.class);
+                    intent.putExtra(MASTER_ID,items.get(getLayoutPosition()).getUid());
+                    context.startActivity(intent);
+                }
+            });
         }
     }
 }

@@ -34,4 +34,8 @@
     <style name="TabLayoutTextStyle">
         <item name="android:textSize">10sp</item>
     </style>
+    <style name="popwin_anim_style">
+        <item name="android:windowEnterAnimation">@anim/menushow</item>
+        <item name="android:windowExitAnimation">@anim/menuhide</item>
+    </style>
 </resources>

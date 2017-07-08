@@ -48,7 +48,6 @@ public class ShopFragment extends Fragment {
         View view = View.inflate(getActivity(), R.layout.shop_fragment, null);
         ButterKnife.bind(this, view);
         tvTitle.setText("商店");
-
         initData();
         return view;
     }
