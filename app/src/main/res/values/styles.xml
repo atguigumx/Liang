@@ -38,4 +38,20 @@
         <item name="android:windowEnterAnimation">@anim/menushow</item>
         <item name="android:windowExitAnimation">@anim/menuhide</item>
     </style>
+
+    <style name="StyledIndicators1" parent="@android:style/Theme.Light">
+        <item name="vpiTabPageIndicatorStyle">@style/CustomTabPageIndicator1</item>
+    </style>
+    <style name="CustomTabPageIndicator1" parent="Widget.TabPageIndicator">
+        <item name="android:background">#404040</item>
+        <item name="android:textAppearance">@style/CustomTabPageIndicator.Text</item>
+        <item name="android:textSize">10sp</item>
+        <item name="android:dividerPadding">14dp</item>
+        <item name="android:showDividers">middle</item>
+        <item name="android:paddingLeft">14dp</item>
+        <item name="android:paddingRight">14dp</item>
+        <item name="android:fadingEdge">horizontal</item>
+        <item name="android:fadingEdgeLength">8dp</item>
+
+    </style>
 </resources>

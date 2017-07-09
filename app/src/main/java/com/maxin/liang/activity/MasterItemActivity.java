@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -14,7 +15,6 @@ import com.alibaba.fastjson.JSONObject;
 import com.bumptech.glide.Glide;
 import com.maxin.liang.R;
 import com.maxin.liang.bean.master.MasterItemBean;
-import com.maxin.liang.fragment.masterfragment.FansFragment;
 import com.maxin.liang.fragment.masterfragment.GuanZhuFragment;
 import com.maxin.liang.fragment.masterfragment.LikeFragment;
 import com.maxin.liang.fragment.masterfragment.TuiJianFragment;
@@ -53,6 +53,10 @@ public class MasterItemActivity extends BaseActivity {
     ViewPager vpMaster;
     private List<Fragment> list;
     private MasterItemBean.DataBean.ItemsBean items;
+    private String likeUrl;
+    private String tuijianUrl;
+    private String guanzhuUrl;
+    private String fansUrl;
 
     @Override
     public void initListener() {
@@ -64,8 +68,11 @@ public class MasterItemActivity extends BaseActivity {
         String masterId = getIntent().getStringExtra(MASTER_ID);
 
         String masterUrl = "http://mobile.iliangcang.com/user/masterListInfo?app_key=Android&count=10&owner_id=" + masterId + "&page=1&sig=5715DFAE35D85EA29846D090DBBF8753%7C557744010558468&v=1.0";
-       //d Log.e("TAG", "" + masterUrl);
-
+        likeUrl="http://mobile.iliangcang.com/user/masterLike?app_key=Android&count=10&owner_id=" + masterId + "&page=1&sig=CD0E234053E25DD6111E3DBD450A4B85%7C954252010968868&v=1.0";
+        tuijianUrl="http://mobile.iliangcang.com/user/masterListInfo?app_key=Android&count=10&owner_id=" + masterId + "&page=1&sig=CD0E234053E25DD6111E3DBD450A4B85%7C954252010968868&v=1.0";
+        guanzhuUrl="http://mobile.iliangcang.com/user/masterFollow?app_key=Android&count=12&owner_id="+masterId+"&page=1&sig=CD0E234053E25DD6111E3DBD450A4B85%7C954252010968868&v=1.0";
+        fansUrl="http://mobile.iliangcang.com/user/masterFollowed?app_key=Android&count=12&owner_id="+masterId+"&page=1&sig=CD0E234053E25DD6111E3DBD450A4B85%7C954252010968868&v=1.0";
+        Log.e("TAG", "" + masterUrl);
         getDataFromNet(masterUrl);
     }
 
@@ -94,17 +101,22 @@ public class MasterItemActivity extends BaseActivity {
     private void initViews(MasterItemBean.DataBean.ItemsBean items) {
         initFragment();
         vpMaster.setAdapter(new PagerAdapter(getSupportFragmentManager()));
+        indictorMaster.setVisibility(View.VISIBLE);
         indictorMaster.setViewPager(vpMaster);
         vpMaster.setCurrentItem(1);
-        Glide.with(MasterItemActivity.this).load(items.getUser_image().getMid()).into(ivMasterPhoto);
+
+        Glide.with(MasterItemActivity.this).load(items.getUser_image().getOrig()).into(ivMasterPhoto);
+        tvMasterName.setText(items.getUser_name());
+        tvMasterName2.setText(items.getUser_name());
+        tvMasterDesc.setText(items.getUser_desc());
     }
 
     private void initFragment() {
         list=new ArrayList<>();
-        list.add(new LikeFragment());
-        list.add(new TuiJianFragment());
-        list.add(new GuanZhuFragment());
-        list.add(new FansFragment());
+        list.add(new LikeFragment(MasterItemActivity.this,likeUrl));
+        list.add(new TuiJianFragment(MasterItemActivity.this, items));
+        list.add(new GuanZhuFragment(MasterItemActivity.this,guanzhuUrl));
+        list.add(new GuanZhuFragment(MasterItemActivity.this,fansUrl));
     }
 
     @Override
@@ -112,7 +124,6 @@ public class MasterItemActivity extends BaseActivity {
         return R.layout.activity_master_item;
     }
     private class PagerAdapter extends FragmentPagerAdapter {
-
 
         public PagerAdapter(FragmentManager fm) {
             super(fm);
@@ -133,13 +144,13 @@ public class MasterItemActivity extends BaseActivity {
         @Override
         public CharSequence getPageTitle(int position) {
             if(position==0) {
-                return "喜欢/n"+items.getLike_count();
+                return "喜欢"+items.getLike_count();
             }else if(position==1) {
-                return "推荐/n"+items.getRecommendation_count();
+                return "推荐"+items.getRecommendation_count();
             }else if(position==2) {
-                return "关注/n"+items.getFollowing_count();
+                return "关注"+items.getFollowing_count();
             }else if(position==3) {
-                return "粉丝/n"+items.getFollowed_count();
+                return "粉丝"+items.getFollowed_count();
             }
             return super.getPageTitle(position);
         }
