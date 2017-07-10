@@ -9,6 +9,7 @@ import android.widget.TextView;
 import com.maxin.liang.R;
 import com.maxin.liang.bean.share.DuanZiBean;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
@@ -20,16 +21,16 @@ import butterknife.ButterKnife;
 
 public class TextAdapter extends BaseAdapter {
     private final Context context;
-    private final List<DuanZiBean.ListBean.TopCommentsBean> items;
+    private List<DuanZiBean.ListBean.TopCommentsBean> items=new ArrayList<>();
 
-    public TextAdapter(Context context, List<DuanZiBean.ListBean.TopCommentsBean> top_comments) {
+    public TextAdapter(Context context, List top_comments) {
         this.context = context;
         this.items = top_comments;
     }
 
     @Override
     public int getCount() {
-        return items.size();
+        return items==null?0:items.size();
     }
 
     @Override
@@ -54,6 +55,7 @@ public class TextAdapter extends BaseAdapter {
         }
         viewHolder.text.setText(items.get(i).getContent());
         viewHolder.name.setText(items.get(i).getU().getName());
+
         return view;
     }
 

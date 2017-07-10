@@ -18,6 +18,8 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
+import static com.maxin.liang.R.id.listview;
+
 /**
  * Created by shkstart on 2017/7/10.
  */
@@ -45,14 +47,22 @@ public class DuanZiAdapter extends RecyclerView.Adapter<DuanZiAdapter.MyHorlder>
         DuanZiBean.ListBean listBean = items.get(position);
         holder.tvContext.setText(listBean.getText());
         holder.tvName.setText(listBean.getU().getName());
-        Glide.with(context).load(listBean.getU().getRoom_icon()).into(holder.ivHeadpic);
+        Glide.with(context).load(listBean.getU().getHeader().get(0)).into(holder.ivHeadpic);
         holder.tvTimeRefresh.setText(listBean.getPasstime());
         holder.tvPostsNumber.setText("" + listBean.getForward());
         holder.tvShenheCaiNumber.setText("" + listBean.getDown());
         holder.tvDownloadNumber.setText(listBean.getComment());
         holder.tvShenheDingNumber.setText(listBean.getUp());
 
+        holder.listView.setAdapter(new TextAdapter(context,items.get(position).getTop_comments()));
         //holder.listView.setAdapter(new TextAdapter(context,listBean.getTop_comments()));
+       /* int measuredHeight =holder.listView.getChildAt(0).getMeasuredHeight();
+        int height = measuredHeight * holder.listView.getChildCount();
+
+        LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) holder.listView.getLayoutParams();
+        layoutParams.height = height;
+        holder.listView.setLayoutParams(layoutParams);*/
+
 
     }
 
@@ -93,7 +103,7 @@ public class DuanZiAdapter extends RecyclerView.Adapter<DuanZiAdapter.MyHorlder>
         TextView tvDownloadNumber;
         @Bind(R.id.ll_download)
         LinearLayout llDownload;
-        @Bind(R.id.listview)
+        @Bind(listview)
         ListView listView;
         public MyHorlder(View itemView) {
             super(itemView);
