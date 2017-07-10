@@ -56,7 +56,7 @@ public class ShopFragment extends Fragment {
         initFragment();
         vpInvest.setAdapter(new ViewPagerAdapter(getFragmentManager()));
         tabpageInvest.setViewPager(vpInvest);
-        vpInvest.setCurrentItem(2);
+        vpInvest.setCurrentItem(0);
     }
 
     private void initFragment() {

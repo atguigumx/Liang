@@ -58,8 +58,8 @@ public class HomeFragment extends Fragment {
 
     private void processData(String response) {
         HomeBean homeBean = JSON.parseObject(response, HomeBean.class);
-        List<HomeBean.DataBean.ItemsBean.ListBean> list = homeBean.getData().getItems().getList();
-        if(list!=null&&list.size()>0) {
+        List<HomeBean.DataBean.ItemsBean.ListBeanX> list = homeBean.getData().getItems().getList();
+        if(list !=null&& list.size()>0) {
             HomeFragmentAdapter homeFragmentAdapter = new HomeFragmentAdapter(getActivity(),list);
             recyclerviewHome.setAdapter(homeFragmentAdapter);
             GridLayoutManager manager = new GridLayoutManager(getActivity(),1);

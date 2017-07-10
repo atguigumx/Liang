@@ -23,13 +23,12 @@ import butterknife.ButterKnife;
 
 public class HomeFragmentAdapter extends RecyclerView.Adapter {
     private final Context context;
-    private final List<HomeBean.DataBean.ItemsBean.ListBean> items;
     private final LayoutInflater inflater;
+    private final List<HomeBean.DataBean.ItemsBean.ListBeanX> items;
 
 
 
-
-    public HomeFragmentAdapter(Context context, List<HomeBean.DataBean.ItemsBean.ListBean> list) {
+    public HomeFragmentAdapter(Context context, List<HomeBean.DataBean.ItemsBean.ListBeanX> list) {
         this.context = context;
         this.items = list;
         inflater = LayoutInflater.from(context);
@@ -43,6 +42,8 @@ public class HomeFragmentAdapter extends RecyclerView.Adapter {
             return new FourTypeViewHolder(context, inflater.inflate(R.layout.four_homefragment, null));
         } else if (viewType == 2) {
             return new TwoTypeViewHolder(context, inflater.inflate(R.layout.two_homefragment, null));
+        } else if (viewType == 6) {
+            return new SixTypeViewHolder(context, inflater.inflate(R.layout.six_homefragment, null));
         }
 
         return null;
@@ -50,7 +51,7 @@ public class HomeFragmentAdapter extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        HomeBean.DataBean.ItemsBean.ListBean listBean = items.get(position);
+        HomeBean.DataBean.ItemsBean.ListBeanX listBean = items.get(position);
         if (getItemViewType(position) == 1) {
             OneTypeViewHolder oneTypeViewHolder = (OneTypeViewHolder) holder;
             //设置数据
@@ -62,13 +63,17 @@ public class HomeFragmentAdapter extends RecyclerView.Adapter {
         } else if (getItemViewType(position) == 2) {
             TwoTypeViewHolder twoTypeViewHolder = (TwoTypeViewHolder) holder;
             twoTypeViewHolder.setData(listBean);
+        } else if (getItemViewType(position) == 6) {
+            SixTypeViewHolder sixTypeViewHolder= (SixTypeViewHolder) holder;
+            sixTypeViewHolder.setData(listBean);
+
         }
     }
 
     @Override
     public int getItemViewType(int position) {
-        String home_type = items.get(position).getHome_type();
-        int currentType = Integer.parseInt(home_type);
+        int home_type = items.get(position).getHome_type();
+        int currentType = home_type;
         return currentType;
     }
 
@@ -82,7 +87,7 @@ public class HomeFragmentAdapter extends RecyclerView.Adapter {
         @Bind(R.id.onehomefragment_iv)
         ImageView onehomefragmentIv;
         private final Context context;
-        private String topic_url;
+
 
         public OneTypeViewHolder(final Context context, View itemView) {
             super(itemView);
@@ -91,8 +96,7 @@ public class HomeFragmentAdapter extends RecyclerView.Adapter {
 
         }
 
-        public void setData(HomeBean.DataBean.ItemsBean.ListBean listBean) {
-            topic_url = listBean.getOne().getTopic_url();
+        public void setData(HomeBean.DataBean.ItemsBean.ListBeanX listBean) {
             Glide.with(context).load(listBean.getOne().getPic_url()).into(onehomefragmentIv);
             onehomefragmentIv.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -120,7 +124,7 @@ public class HomeFragmentAdapter extends RecyclerView.Adapter {
             this.context = context;
         }
 
-        public void setData(HomeBean.DataBean.ItemsBean.ListBean listBean) {
+        public void setData(HomeBean.DataBean.ItemsBean.ListBeanX listBean) {
             Glide.with(context).load(listBean.getOne().getPic_url()).into(fourhomeOne);
             Glide.with(context).load(listBean.getTwo().getPic_url()).into(fourhomeTwo);
             Glide.with(context).load(listBean.getThree().getPic_url()).into(fourhomeThree);
@@ -139,12 +143,29 @@ public class HomeFragmentAdapter extends RecyclerView.Adapter {
         public TwoTypeViewHolder(Context context, View itemView) {
             super(itemView);
             this.context = context;
-            ButterKnife.bind(this,itemView);
+            ButterKnife.bind(this, itemView);
         }
 
-        public void setData(HomeBean.DataBean.ItemsBean.ListBean listBean) {
+        public void setData(HomeBean.DataBean.ItemsBean.ListBeanX listBean) {
             Glide.with(context).load(listBean.getOne().getPic_url()).into(twoFragmentOne);
             Glide.with(context).load(listBean.getTwo().getPic_url()).into(twoFragmentTwo);
+        }
+    }
+
+    class SixTypeViewHolder extends RecyclerView.ViewHolder {
+        @Bind(R.id.sixhomefragment_iv)
+        ImageView sixhomefragmentIv;
+        private final Context context;
+
+        public SixTypeViewHolder(Context context, View itemView) {
+            super(itemView);
+            this.context = context;
+            ButterKnife.bind(this, itemView);
+        }
+
+        public void setData(HomeBean.DataBean.ItemsBean.ListBeanX listBean) {
+            Glide.with(context).load(listBean.getPic_url()).into(sixhomefragmentIv);
+
         }
     }
 }

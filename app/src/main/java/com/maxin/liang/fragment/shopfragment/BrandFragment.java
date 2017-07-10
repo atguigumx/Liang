@@ -112,7 +112,6 @@ public class BrandFragment extends Fragment {
             viewHolder.tvBrandItem.setText(items.get(i).getBrand_name());
             Glide.with(getActivity())
                     .load(items.get(i).getBrand_logo()).into(viewHolder.ivBrandItem);
-
             return view;
         }
 
