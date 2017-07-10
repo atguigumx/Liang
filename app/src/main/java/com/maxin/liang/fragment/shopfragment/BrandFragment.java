@@ -1,5 +1,6 @@
 package com.maxin.liang.fragment.shopfragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSON;
 import com.bumptech.glide.Glide;
 import com.maxin.liang.R;
+import com.maxin.liang.activity.BrandInfoActivity;
 import com.maxin.liang.bean.shop.BrandBean;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
@@ -27,9 +29,11 @@ import okhttp3.Call;
 
 /**
  * Created by shkstart on 2017/7/6.
+ * 品牌
  */
 
 public class BrandFragment extends Fragment {
+    public static final String BRANDID = "brand_id";
     @Bind(R.id.listview_brand)
     ListView listviewBrand;
     private List<BrandBean.DataBean.ItemsBean> items;
@@ -100,7 +104,7 @@ public class BrandFragment extends Fragment {
             ViewHolder viewHolder;
             if (view == null) {
                 view = View.inflate(getActivity(), R.layout.brand_item, null);
-                viewHolder=new ViewHolder(view);
+                viewHolder=new ViewHolder(view,items.get(i));
                 view.setTag(viewHolder);
             }else {
                 viewHolder= (ViewHolder) view.getTag();
@@ -118,8 +122,17 @@ public class BrandFragment extends Fragment {
             @Bind(R.id.tv_brand_item)
             TextView tvBrandItem;
 
-            ViewHolder(View view) {
+            ViewHolder(View view, final BrandBean.DataBean.ItemsBean itemsBean) {
                 ButterKnife.bind(this, view);
+                view.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(getActivity(), BrandInfoActivity.class);
+                        intent.putExtra(BRANDID,itemsBean.getBrand_id());
+                        Log.e("BrandFragment", ""+itemsBean.getBrand_id());
+                        startActivity(intent);
+                    }
+                });
             }
         }
     }

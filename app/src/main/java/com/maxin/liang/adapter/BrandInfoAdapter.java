@@ -11,7 +11,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.maxin.liang.R;
 import com.maxin.liang.activity.GoodsInfoActivity;
-import com.maxin.liang.bean.shop.GoodsListBean;
+import com.maxin.liang.bean.shop.BrandInfosBean;
 import com.maxin.liang.utils.NetConfig;
 
 import java.util.List;
@@ -22,27 +22,30 @@ import butterknife.ButterKnife;
 import static com.maxin.liang.fragment.shopfragment.TypeFragment.POSITION;
 
 /**
- * Created by shkstart on 2017/7/6.
+ * Created by shkstart on 2017/7/10.
  */
-public class GoodsListAdapter extends RecyclerView.Adapter<GoodsListAdapter.MyviewHorlder>{
-    public static final String POSITIONID = "position_id";
+
+public class BrandInfoAdapter extends RecyclerView.Adapter<BrandInfoAdapter.MyHorlder> {
+
     private final Context context;
-    private final List<GoodsListBean.DataBean.ItemsBean> items;
-    private GoodsListBean.DataBean.ItemsBean itemsBean;
+    private final List<BrandInfosBean.DataBean.ItemsBean> items;
+    private BrandInfosBean.DataBean.ItemsBean itemsBean;
 
-    public GoodsListAdapter(Context context, List items){
+
+    public BrandInfoAdapter(Context context, List<BrandInfosBean.DataBean.ItemsBean> itemsBean) {
         this.context=context;
-        this.items=items;
-
+        this.items=itemsBean;
     }
+
+
     @Override
-    public MyviewHorlder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public MyHorlder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = View.inflate(context, R.layout.item_goodslist, null);
-        return new MyviewHorlder(view);
+        return new MyHorlder(view);
     }
 
     @Override
-    public void onBindViewHolder(MyviewHorlder holder, int position) {
+    public void onBindViewHolder(MyHorlder holder, int position) {
         itemsBean = items.get(position);
         holder.tvLikeItemGoodslist.setText(itemsBean.getLike_count());
         Glide.with(context).load(itemsBean.getGoods_image()).into(holder.ivItemGoodslist);
@@ -56,7 +59,8 @@ public class GoodsListAdapter extends RecyclerView.Adapter<GoodsListAdapter.Myvi
         return items==null?0:items.size();
     }
 
-    class MyviewHorlder extends RecyclerView.ViewHolder {
+    class MyHorlder extends RecyclerView.ViewHolder{
+
         @Bind(R.id.iv_item_goodslist)
         ImageView ivItemGoodslist;
         @Bind(R.id.tv_jieshao_item_goodslist)
@@ -68,7 +72,7 @@ public class GoodsListAdapter extends RecyclerView.Adapter<GoodsListAdapter.Myvi
         @Bind(R.id.tv_price_item_goodslist)
         TextView tvPriceItemGoodslist;
 
-        public MyviewHorlder(View itemView) {
+        public MyHorlder(View itemView) {
             super(itemView);
             ButterKnife.bind(this,itemView);
             itemView.setOnClickListener(new View.OnClickListener() {

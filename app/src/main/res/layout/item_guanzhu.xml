@@ -11,6 +11,7 @@
     <TextView
         android:layout_gravity="center"
         android:text="Nicola"
+        android:textColor="@android:color/white"
         android:id="@+id/tv_item_guanzhu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />

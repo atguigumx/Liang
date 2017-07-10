@@ -22,7 +22,9 @@
         <activity android:name=".activity.GoodsListActivity" />
         <activity android:name=".activity.GoodsInfoActivity" />
         <activity android:name=".activity.WebViewActivity" />
-        <activity android:name=".activity.MasterItemActivity"></activity>
+        <activity android:name=".activity.MasterItemActivity" />
+        <activity android:name=".activity.BrandInfoActivity" />
+        <activity android:name=".activity.MGZActivity"></activity>
     </application>
 
 </manifest>
