@@ -17,7 +17,7 @@
             android:layout_height="30dp"
             android:src="@drawable/actionbar_navigation_back"
             android:layout_marginLeft="20dp"
-            android:visibility="visible"
+            android:visibility="gone"
             />
 
         <TextView

@@ -56,7 +56,17 @@
     </style>
 
 
+    <style name="RBStyle" parent="RBBase">
+        <item name="android:drawablePadding">5dp</item>
+        <item name="android:textColor">@drawable/text_color_selector</item>
+        <item name="android:textSize">12sp</item>
+    </style>
 
-
-
+    <style name="RBBase">
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center</item>
+        <item name="android:button">@null</item>
+    </style>
 </resources>

@@ -1,6 +1,7 @@
 package com.maxin.liang.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,20 +14,32 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.maxin.liang.R;
+import com.maxin.liang.activity.tuijian.TuiJianImageInfoActivity;
+import com.maxin.liang.activity.tuijian.TuiJianTextInfoActivity;
+import com.maxin.liang.activity.tuijian.TuiJianVideoInfoActivity;
 import com.maxin.liang.bean.share.TuiJianBean;
 import com.maxin.liang.utils.TimeUtils;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
+import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard;
+import uk.co.senab.photoview.PhotoView;
 
 /**
  * Created by shkstart on 2017/7/10.
  */
 
 public class TuiJianAdapter extends RecyclerView.Adapter {
+    public static final String TUIJIANID = "tuijian_id";
+    public static final String VIDEOURL = "video_url";
+    public static final String PLAYCOUNT = "play_count";
+    public static final String UP = "up";
+    public static final String PASSTIME = "passtime";
+    public static final String CONTEXT = "context";
     private final Context context;
     private final List<TuiJianBean.ListBean> items;
     private final LayoutInflater inflater;
@@ -77,7 +90,7 @@ public class TuiJianAdapter extends RecyclerView.Adapter {
         return items.size();
     }
 
-    int itemViewType = -1;
+    int itemViewType = 0;
 
     @Override
     public int getItemViewType(int position) {
@@ -134,7 +147,19 @@ public class TuiJianAdapter extends RecyclerView.Adapter {
             this.context = context;
             ButterKnife.bind(this, itemView);
         }
-
+        private void initListener(final TuiJianBean.ListBean listBean) {
+            llDownload.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(context, TuiJianTextInfoActivity.class);
+                    intent.putExtra(TUIJIANID,listBean.getId());
+                    intent.putExtra(CONTEXT,listBean.getText());
+                    intent.putExtra(UP,listBean.getUp());
+                    intent.putExtra(PASSTIME,listBean.getPasstime());
+                    context.startActivity(intent);
+                }
+            });
+        }
         public void setData(TuiJianBean.ListBean listBean) {
             tvContext.setText(listBean.getText());
             tvName.setText(listBean.getU().getName());
@@ -145,7 +170,7 @@ public class TuiJianAdapter extends RecyclerView.Adapter {
             tvDownloadNumber.setText(listBean.getComment());
             tvShenheDingNumber.setText(listBean.getUp());
 
-            listview.setAdapter(new TextAdapter(context, items.get(getLayoutPosition()).getTop_comments()));
+            initListener(listBean);
         }
     }
 
@@ -163,7 +188,7 @@ public class TuiJianAdapter extends RecyclerView.Adapter {
         @Bind(R.id.tv_context)
         TextView tvContext;
         @Bind(R.id.iv_image_icon)
-        ImageView ivImageIcon;
+        PhotoView ivImageIcon;
         @Bind(R.id.tv_ding)
         TextView tvDing;
         @Bind(R.id.tv_shenhe_ding_number)
@@ -190,21 +215,40 @@ public class TuiJianAdapter extends RecyclerView.Adapter {
             this.context = context;
             ButterKnife.bind(this, itemView);
         }
+        private void initListener(final TuiJianBean.ListBean listBean) {
+            llDownload.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(context, TuiJianImageInfoActivity.class);
+                    intent.putExtra(TUIJIANID,listBean.getId());
+                    intent.putExtra(CONTEXT,listBean.getText());
+                    intent.putExtra(VIDEOURL,listBean.getImage().getDownload_url().get(0));
+                    intent.putExtra(UP,listBean.getUp());
+                    intent.putExtra(PASSTIME,listBean.getPasstime());
+                    context.startActivity(intent);
+                }
+            });
+        }
 
         public void setData(TuiJianBean.ListBean listBean) {
             Glide.with(context).load(listBean.getU().getHeader().get(0)).into(ivHeadpic);
             tvName.setText(listBean.getU().getName());
             tvTimeRefresh.setText(listBean.getPasstime());
             tvContext.setText(listBean.getText());
-            Glide.with(context).load(listBean.getImage().getBig().get(0)).into(ivImageIcon);
+//            Glide.with(context).load(listBean.getImage().getDownload_url().get(0)).into(ivImageIcon);
+            ImageLoader loader = ImageLoader.getInstance();
+            loader.displayImage(listBean.getImage().getDownload_url().get(0), ivImageIcon);
             tvShenheDingNumber.setText(listBean.getUp());
             tvShenheCaiNumber.setText(listBean.getDown() + "");
             tvPostsNumber.setText(listBean.getForward() + " ");
             tvDownloadNumber.setText(listBean.getDown()+"");
+
+            initListener(listBean);
         }
     }
 
     class GifViewHolder extends RecyclerView.ViewHolder {
+        private final Context context;
         @Bind(R.id.iv_headpic)
         ImageView ivHeadpic;
         @Bind(R.id.tv_name)
@@ -240,18 +284,36 @@ public class TuiJianAdapter extends RecyclerView.Adapter {
         public GifViewHolder(Context context, View itemView) {
             super(itemView);
             ButterKnife.bind(this,itemView);
+            this.context=context;
         }
-
+        private void initListener(final TuiJianBean.ListBean listBean) {
+            llDownload.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(context, TuiJianImageInfoActivity.class);
+                    intent.putExtra(TUIJIANID,listBean.getId());
+                    intent.putExtra(CONTEXT,listBean.getText());
+                    intent.putExtra(VIDEOURL,listBean.getGif().getDownload_url().get(0));
+                    intent.putExtra(UP,listBean.getUp());
+                    intent.putExtra(PASSTIME,listBean.getPasstime());
+                    context.startActivity(intent);
+                }
+            });
+        }
         public void setData(TuiJianBean.ListBean listBean) {
             Glide.with(context).load(listBean.getU().getHeader().get(0)).into(ivHeadpic);
+
             tvName.setText(listBean.getU().getName());
             tvTimeRefresh.setText(listBean.getPasstime());
             tvContext.setText(listBean.getText());
-            Glide.with(context).load(listBean.getImage().getBig().get(0)).into(ivImageGif);
+            Glide.with(context).load(listBean.getGif().getImages().get(0)).asGif().into(ivImageGif);
             tvShenheDingNumber.setText(listBean.getUp());
             tvShenheCaiNumber.setText(listBean.getDown() + "");
             tvPostsNumber.setText(listBean.getForward() + " ");
             tvDownloadNumber.setText(listBean.getDown()+"");
+
+            initListener(listBean);
+
         }
     }
 
@@ -267,7 +329,7 @@ public class TuiJianAdapter extends RecyclerView.Adapter {
         @Bind(R.id.tv_context)
         TextView tvContext;
         @Bind(R.id.jcv_videoplayer)
-        JCVideoPlayer jcvVideoplayer;
+        JCVideoPlayerStandard jcvVideoplayer;
         @Bind(R.id.tv_play_nums)
         TextView tvPlayNums;
         @Bind(R.id.tv_video_duration)
@@ -302,6 +364,23 @@ public class TuiJianAdapter extends RecyclerView.Adapter {
             this.context = context;
             ButterKnife.bind(this, itemView);
             timeUtils = new TimeUtils();
+
+        }
+
+        private void initListener(final TuiJianBean.ListBean listBean) {
+            llDownload.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(context, TuiJianVideoInfoActivity.class);
+                    intent.putExtra(TUIJIANID,listBean.getId());
+                    intent.putExtra(CONTEXT,listBean.getText());
+                    intent.putExtra(VIDEOURL,listBean.getVideo().getVideo().get(0));
+                    intent.putExtra(PLAYCOUNT,listBean.getVideo().getPlaycount() + "次播放");
+                    intent.putExtra(UP,listBean.getUp());
+                    intent.putExtra(PASSTIME,listBean.getPasstime());
+                    context.startActivity(intent);
+                }
+            });
         }
 
         public void setData(TuiJianBean.ListBean listBean) {
@@ -309,7 +388,6 @@ public class TuiJianAdapter extends RecyclerView.Adapter {
             tvName.setText(listBean.getU().getName());
             tvTimeRefresh.setText(listBean.getPasstime());
             tvContext.setText(listBean.getText());
-            jcvVideoplayer.setUp(listBean.getVideo().getVideo().get(0), JCVideoPlayer.SCREEN_LAYOUT_LIST, "");
             tvPlayNums.setText(listBean.getVideo().getPlaycount() + "次播放");
             tvVideoDuration.setText(timeUtils.stringForTime(listBean.getVideo().getDuration() * 1000) + "");
             tvShenheDingNumber.setText(listBean.getUp());
@@ -317,6 +395,10 @@ public class TuiJianAdapter extends RecyclerView.Adapter {
             tvPostsNumber.setText(listBean.getForward() + " ");
             tvDownloadNumber.setText(listBean.getDown()+"");
 
+            jcvVideoplayer.setUp(listBean.getVideo().getVideo().get(0), JCVideoPlayer.SCREEN_LAYOUT_LIST, "");
+            Glide.with(context).load(listBean.getVideo().getThumbnail().get(0)).into(jcvVideoplayer.thumbImageView);
+
+            initListener(listBean);
         }
     }
 

@@ -12,7 +12,6 @@ import com.bumptech.glide.Glide;
 import com.maxin.liang.R;
 import com.maxin.liang.activity.GoodsInfoActivity;
 import com.maxin.liang.bean.shop.GoodsListBean;
-import com.maxin.liang.utils.NetConfig;
 
 import java.util.List;
 
@@ -75,7 +74,7 @@ public class GoodsListAdapter extends RecyclerView.Adapter<GoodsListAdapter.Myvi
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(context, GoodsInfoActivity.class);
-                    intent.putExtra(POSITION, NetConfig.BRAND_GOODS_DETAILS_URL +items.get(getLayoutPosition()).getGoods_id());
+                    intent.putExtra(POSITION,items.get(getLayoutPosition()).getGoods_id());
                     context.startActivity(intent);
                 }
             });

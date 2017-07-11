@@ -34,5 +34,8 @@ dependencies {
     compile 'com.alibaba:fastjson:1.1.55.android'
     compile 'com.android.support:recyclerview-v7:24.2.1'
     compile project(':jcvideoplayer-lib')
+    compile 'com.youth.banner:banner:1.4.9'
+    compile project(':PhotoView_library')
+    compile files('libs/universal-image-loader-1.9.5.jar')
 }
 

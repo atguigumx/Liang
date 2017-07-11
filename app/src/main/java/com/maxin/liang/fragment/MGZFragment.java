@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.maxin.liang.R;
 import com.maxin.liang.activity.MGZActivity;
+import com.maxin.liang.activity.MainActivity;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
@@ -49,9 +50,9 @@ public class MGZFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), MGZActivity.class);
-                getActivity().startActivity(intent);
-                getActivity().overridePendingTransition(R.anim.start_down,R.anim.close_up);
-
+                startActivity(intent);
+                MainActivity activity = (MainActivity) getActivity();
+                activity.overridePendingTransition(R.anim.start_down,R.anim.close_up);
             }
         });
     }

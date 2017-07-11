@@ -2,6 +2,8 @@ package com.maxin.liang.common;
 
 import android.app.Application;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.zhy.http.okhttp.OkHttpUtils;
 
 import java.util.concurrent.TimeUnit;
@@ -17,6 +19,9 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
         initOkhttp();
+        ImageLoaderConfiguration config = ImageLoaderConfiguration
+                .createDefault(this);
+        ImageLoader.getInstance().init(config);
     }
 
     private void initOkhttp() {

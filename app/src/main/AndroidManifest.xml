@@ -3,7 +3,11 @@
     package="com.maxin.liang">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <!-- if you want to load images from the internet -->
+    <uses-permission android:name="android.permission.INTERNET" />
 
+    <!-- if you want to load images from a file OR from the internet -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <application
         android:name=".common.MyApplication"
         android:allowBackup="true"
@@ -24,7 +28,11 @@
         <activity android:name=".activity.WebViewActivity" />
         <activity android:name=".activity.MasterItemActivity" />
         <activity android:name=".activity.BrandInfoActivity" />
-        <activity android:name=".activity.MGZActivity"></activity>
+        <activity android:name=".activity.MGZActivity" />
+        <activity android:name=".activity.tuijian.TuiJianVideoInfoActivity" />
+        <activity android:name=".activity.tuijian.TuiJianTextInfoActivity" />
+        <activity android:name=".activity.tuijian.TuiJianImageInfoActivity" />
+        <activity android:name=".activity.tuijian.TuiJianGifInfoActivity"></activity>
     </application>
 
 </manifest>
