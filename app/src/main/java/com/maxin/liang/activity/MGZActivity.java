@@ -22,7 +22,7 @@ public class MGZActivity extends BaseActivity {
             @Override
             public void onClick(View view) {
                 finish();
-                overridePendingTransition(0,R.anim.close_up);
+                overridePendingTransition(R.anim.bottom_in, R.anim.top_out);
             }
         });
     }
