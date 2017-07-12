@@ -5,7 +5,9 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -44,8 +46,12 @@ public class MGZFragment extends Fragment {
     TextView tvTitleDate;
     @Bind(R.id.mgz_titile)
     LinearLayout mgzTitile;
+    @Bind(R.id.tv_title)
+    TextView tvTitle;
     private String[] keys;
     private List<MGZBean> beans = new ArrayList<>();
+    private MGZAdapter adapter;
+    private int prePosition;
 
     @Nullable
     @Override
@@ -54,7 +60,28 @@ public class MGZFragment extends Fragment {
         ButterKnife.bind(this, view);
         getDataFromNet(url);
         initView();
+        initListener();
         return view;
+    }
+
+    private void initListener() {
+        recyclerviewMgz.addOnScrollListener(new RecyclerView.OnScrollListener() {
+
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, final int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+                final int position = layoutManager.findFirstVisibleItemPosition();
+                if (prePosition != position) {
+                    if (position == 0) {
+                        tvTitleDate.setText("TODAY");
+                    } else {
+                        tvTitleDate.setText(adapter.getDate(position));
+                    }
+                }
+                prePosition = position;
+            }
+        });
     }
 
     private void initView() {
@@ -64,7 +91,7 @@ public class MGZFragment extends Fragment {
                 Intent intent = new Intent(getActivity(), MGZActivity.class);
                 startActivity(intent);
                 MainActivity activity = (MainActivity) getActivity();
-                activity.overridePendingTransition(R.anim.start_down,R.anim.close_up);
+                activity.overridePendingTransition(R.anim.start_down, R.anim.close_up);
             }
         });
     }
@@ -95,6 +122,7 @@ public class MGZFragment extends Fragment {
                     if (items != null) {
                         JSONArray arrs = items.optJSONArray("keys");
                         if (arrs != null && arrs.length() > 0) {
+                            beans.clear();
                             keys = new String[arrs.length()];
                             for (int i = 0; i < arrs.length(); i++) {
                                 keys[i] = (String) arrs.opt(i);
@@ -128,9 +156,10 @@ public class MGZFragment extends Fragment {
                 }
             }
             if (beans != null && beans.size() > 0) {
-                MGZAdapter adapter = new MGZAdapter(getActivity(), beans);
+                adapter = new MGZAdapter(getActivity(), beans);
                 recyclerviewMgz.setAdapter(adapter);
-                recyclerviewMgz.setLayoutManager(new GridLayoutManager(getActivity(),1));
+                recyclerviewMgz.setLayoutManager(new GridLayoutManager(getActivity(), 1));
+
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -141,5 +170,25 @@ public class MGZFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.unbind(this);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        String authorName = ((MainActivity) getActivity()).getAuthorName();
+        if (!TextUtils.isEmpty(authorName)) {
+            tvTitle.setText("杂志 - " + authorName);
+        } else {
+            tvTitle.setText("杂志");
+        }
+        String url = ((MainActivity)getActivity()).getUrl();
+        Log.e("TAG", ""+url);
+        if(!TextUtils.isEmpty(url)) {
+            getDataFromNet(url);
+        }
+
+
+
+
     }
 }

@@ -65,14 +65,7 @@ public class AuthorAdapter extends RecyclerView.Adapter<AuthorAdapter.MyViewHorl
         public MyViewHorlder(View itemView) {
             super(itemView);
             ButterKnife.bind(this,itemView);
-            if(getLayoutPosition()<11) {
-                itemView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
 
-                    }
-                });
-            }
         }
     }
 }

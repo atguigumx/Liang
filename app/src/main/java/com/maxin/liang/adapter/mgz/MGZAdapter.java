@@ -53,6 +53,10 @@ public class MGZAdapter extends RecyclerView.Adapter<MGZAdapter.MyViewHorlder> {
     public int getItemCount() {
         return items == null ? 0 : items.size();
     }
+    public String getDate(int position) {
+        String addtime = items.get(position).getAddtime();
+        return DateChange.dateFormat(addtime.substring(5,7)) + "." + addtime.substring(8, 10);
+    }
 
     class MyViewHorlder extends RecyclerView.ViewHolder {
         @Bind(R.id.iv_icon)

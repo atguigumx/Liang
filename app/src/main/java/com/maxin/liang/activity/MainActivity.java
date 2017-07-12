@@ -1,7 +1,9 @@
 package com.maxin.liang.activity;
 
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.widget.FrameLayout;
 import android.widget.RadioButton;
@@ -22,6 +24,10 @@ import java.util.TimerTask;
 
 import butterknife.Bind;
 
+import static com.maxin.liang.fragment.mgzfragment.MGZAuthorFragment.MGZAUTHORNAME;
+import static com.maxin.liang.fragment.mgzfragment.MGZAuthorFragment.MGZCHEKID;
+import static com.maxin.liang.fragment.mgzfragment.MGZAuthorFragment.MGZURL;
+
 public class MainActivity extends BaseActivity {
     @Bind(R.id.main_fl)
     FrameLayout mainFl;
@@ -40,6 +46,8 @@ public class MainActivity extends BaseActivity {
     private List<Fragment> fragments;
     private Fragment tempFragment;
     private int position;
+    private String url;
+    private String authorName;
 
     @Override
     public void initListener() {
@@ -74,8 +82,37 @@ public class MainActivity extends BaseActivity {
     }
 
     @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        String urls = intent.getStringExtra(MGZURL);
+
+        if(!TextUtils.isEmpty(urls)) {
+            url=urls;
+        }else {
+            url=null;
+        }
+
+        String authorNames = intent.getStringExtra(MGZAUTHORNAME);
+        if(!TextUtils.isEmpty(authorNames)) {
+            authorName=authorNames;
+        }else {
+            authorName=null;
+        }
+
+        int checkedId = intent.getIntExtra(MGZCHEKID, R.id.rb_main_shop);
+        if (checkedId == R.id.rb_main_magzine) {
+            rgMain.check(R.id.rb_main_magzine);
+        }
+    }
+
+    @Override
     public void initData() {
         initFragment();
+
+        int checkedId = getIntent().getIntExtra("checkedId", R.id.rb_main_shop);
+        if (checkedId == R.id.rb_main_magzine) {
+            rgMain.check(R.id.rb_main_magzine);
+        }
     }
 
     private void initFragment() {
@@ -155,6 +192,12 @@ public class MainActivity extends BaseActivity {
         }
 
         return super.onKeyUp(keyCode, event);
+    }
+    public String getUrl(){
+        return url;
+    }
+    public String getAuthorName(){
+        return authorName;
     }
 
 }
