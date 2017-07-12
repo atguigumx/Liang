@@ -1,4 +1,4 @@
-package com.maxin.liang.adapter;
+package com.maxin.liang.adapter.share;
 
 import android.content.Context;
 import android.content.Intent;
@@ -22,10 +22,10 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 import static com.maxin.liang.R.id.listview;
-import static com.maxin.liang.adapter.TuiJianAdapter.CONTEXT;
-import static com.maxin.liang.adapter.TuiJianAdapter.PASSTIME;
-import static com.maxin.liang.adapter.TuiJianAdapter.TUIJIANID;
-import static com.maxin.liang.adapter.TuiJianAdapter.UP;
+import static com.maxin.liang.adapter.share.TuiJianAdapter.CONTEXT;
+import static com.maxin.liang.adapter.share.TuiJianAdapter.PASSTIME;
+import static com.maxin.liang.adapter.share.TuiJianAdapter.TUIJIANID;
+import static com.maxin.liang.adapter.share.TuiJianAdapter.UP;
 
 /**
  * Created by shkstart on 2017/7/10.

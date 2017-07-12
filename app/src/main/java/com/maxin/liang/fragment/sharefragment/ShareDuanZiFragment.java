@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 
 import com.alibaba.fastjson.JSONObject;
 import com.maxin.liang.R;
-import com.maxin.liang.adapter.DuanZiAdapter;
+import com.maxin.liang.adapter.share.DuanZiAdapter;
 import com.maxin.liang.bean.share.DuanZiBean;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;

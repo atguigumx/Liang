@@ -22,11 +22,11 @@ import butterknife.Bind;
 import okhttp3.Call;
 import uk.co.senab.photoview.PhotoView;
 
-import static com.maxin.liang.adapter.TuiJianAdapter.CONTEXT;
-import static com.maxin.liang.adapter.TuiJianAdapter.PASSTIME;
-import static com.maxin.liang.adapter.TuiJianAdapter.TUIJIANID;
-import static com.maxin.liang.adapter.TuiJianAdapter.UP;
-import static com.maxin.liang.adapter.TuiJianAdapter.VIDEOURL;
+import static com.maxin.liang.adapter.share.TuiJianAdapter.CONTEXT;
+import static com.maxin.liang.adapter.share.TuiJianAdapter.PASSTIME;
+import static com.maxin.liang.adapter.share.TuiJianAdapter.TUIJIANID;
+import static com.maxin.liang.adapter.share.TuiJianAdapter.UP;
+import static com.maxin.liang.adapter.share.TuiJianAdapter.VIDEOURL;
 
 public class TuiJianImageInfoActivity extends BaseActivity {
 

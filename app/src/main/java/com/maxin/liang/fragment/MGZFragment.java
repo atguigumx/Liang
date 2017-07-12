@@ -16,7 +16,7 @@ import android.widget.TextView;
 import com.maxin.liang.R;
 import com.maxin.liang.activity.MGZActivity;
 import com.maxin.liang.activity.MainActivity;
-import com.maxin.liang.adapter.MGZAdapter;
+import com.maxin.liang.adapter.mgz.MGZAdapter;
 import com.maxin.liang.bean.mgz.MGZBean;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;

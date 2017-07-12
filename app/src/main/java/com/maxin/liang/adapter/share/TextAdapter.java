@@ -1,4 +1,4 @@
-package com.maxin.liang.adapter;
+package com.maxin.liang.adapter.share;
 
 import android.content.Context;
 import android.view.View;

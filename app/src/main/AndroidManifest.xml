@@ -38,7 +38,9 @@
         <activity android:name=".activity.WebViewActivity" />
         <activity android:name=".activity.MasterItemActivity" />
         <activity android:name=".activity.BrandInfoActivity" />
-        <activity android:name=".activity.MGZActivity" />
+        <activity android:name=".activity.MGZActivity"
+
+            />
         <activity android:name=".activity.tuijian.TuiJianVideoInfoActivity" />
         <activity android:name=".activity.tuijian.TuiJianTextInfoActivity" />
         <activity android:name=".activity.tuijian.TuiJianImageInfoActivity" />

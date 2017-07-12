@@ -1,4 +1,4 @@
-package com.maxin.liang.fragment.sharefragment;
+package com.maxin.liang.fragment.mgzfragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -12,8 +12,8 @@ import android.view.ViewGroup;
 
 import com.alibaba.fastjson.JSONObject;
 import com.maxin.liang.R;
-import com.maxin.liang.adapter.share.TuiJianAdapter;
-import com.maxin.liang.bean.share.TuiJianBean;
+import com.maxin.liang.adapter.mgz.AuthorAdapter;
+import com.maxin.liang.bean.mgz.AuthorBean;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
@@ -24,27 +24,29 @@ import butterknife.ButterKnife;
 import okhttp3.Call;
 
 /**
- * Created by shkstart on 2017/7/10.  text video image gif
+ * Created by shkstart on 2017/7/12.
  */
 
-public class ShareTuiJianFragment extends Fragment {
-    @Bind(R.id.recyclerview_tuijian)
-    RecyclerView recyclerviewTuijian;
-    String url="http://s.budejie.com/topic/list/jingxuan/1/budejie-android-6.6.3/0-20.json";
+public class MGZAuthorFragment extends Fragment {
+    @Bind(R.id.recyclerview_author)
+    RecyclerView recyclerviewAuthor;
+    String authorUrl="http://mobile.iliangcang.com/topic/magazineAuthorList?app_key=Android&sig=2FA0974FFF1BC3DFA562AA63C8B5A84F%7C118265010131868&v=1.0";
+    private AuthorAdapter adapter;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = View.inflate(getActivity(), R.layout.tuijian_fragment, null);
+        View view = View.inflate(getActivity(), R.layout.author_fragment, null);
         ButterKnife.bind(this, view);
-        getDataFromNet(url);
+        getDateFromNet();
         return view;
     }
 
-    private void getDataFromNet(String url) {
-        OkHttpUtils.get().url(url).build().execute(new StringCallback() {
+    private void getDateFromNet() {
+        OkHttpUtils.get().url(authorUrl).build().execute(new StringCallback() {
             @Override
             public void onError(Call call, Exception e, int id) {
-                Log.e("ShareTuiJianFragment", "onError="+e.getMessage());
+                Log.e("MGZAuthorFragment", "onError="+e.getMessage());
             }
 
             @Override
@@ -55,14 +57,15 @@ public class ShareTuiJianFragment extends Fragment {
     }
 
     private void processData(String response) {
-        TuiJianBean tuiJianBean = JSONObject.parseObject(response, TuiJianBean.class);
-        List<TuiJianBean.ListBean> list = tuiJianBean.getList();
-        if(list!=null&&list.size()>0) {
-            TuiJianAdapter adapter = new TuiJianAdapter(getActivity(), list);
-            recyclerviewTuijian.setAdapter(adapter);
-            recyclerviewTuijian.setLayoutManager(new GridLayoutManager(getActivity(),1));
+        AuthorBean authorBean = JSONObject.parseObject(response, AuthorBean.class);
+        List<AuthorBean.DataBean.ItemsBean> items = authorBean.getData().getItems();
+        if(items!=null&&items.size()>0) {
+            adapter = new AuthorAdapter(getActivity(), items);
+            recyclerviewAuthor.setAdapter(adapter);
+            recyclerviewAuthor.setLayoutManager(new GridLayoutManager(getActivity(),1));
         }
     }
+
 
     @Override
     public void onDestroyView() {

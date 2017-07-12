@@ -19,10 +19,10 @@ import java.util.List;
 import butterknife.Bind;
 import okhttp3.Call;
 
-import static com.maxin.liang.adapter.TuiJianAdapter.CONTEXT;
-import static com.maxin.liang.adapter.TuiJianAdapter.PASSTIME;
-import static com.maxin.liang.adapter.TuiJianAdapter.TUIJIANID;
-import static com.maxin.liang.adapter.TuiJianAdapter.UP;
+import static com.maxin.liang.adapter.share.TuiJianAdapter.CONTEXT;
+import static com.maxin.liang.adapter.share.TuiJianAdapter.PASSTIME;
+import static com.maxin.liang.adapter.share.TuiJianAdapter.TUIJIANID;
+import static com.maxin.liang.adapter.share.TuiJianAdapter.UP;
 
 public class TuiJianTextInfoActivity extends BaseActivity {
 
