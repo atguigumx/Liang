@@ -31,8 +31,30 @@
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="30.0dip">
-
-        <TextView
+        <RadioGroup
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <RadioButton
+                android:id="@+id/brand_story_tv"
+                android:text="品牌故事"
+                style="@style/RBBase"
+                android:background="@drawable/brand_bg_selector"
+                android:textColor="@drawable/brand_text_color_selector"
+                android:layout_width="0dp"
+                android:layout_height="match_parent" />
+            <RadioButton
+                android:id="@+id/brand_goods_tv"
+                android:text="品牌产品"
+                style="@style/RBBase"
+                android:background="@drawable/brand_bg_selector"
+                android:textColor="@drawable/brand_text_color_selector"
+                android:checked="true"
+                android:layout_width="0dp"
+                android:layout_height="match_parent" />
+        </RadioGroup>
+        <!--<TextView
             android:id="@+id/brand_story_tv"
             android:layout_width="0.0dip"
             android:layout_height="fill_parent"
@@ -52,10 +74,11 @@
             android:gravity="center"
             android:text="品牌产品"
             android:textColor="#ffffffff"
-            android:textSize="12.5sp" />
+            android:textSize="12.5sp" />-->
     </LinearLayout>
 
     <FrameLayout
+        android:background="#121017"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent">
 
@@ -68,7 +91,7 @@
             android:layout_marginTop="35.0dip"
             android:lineSpacingExtra="10.0dip"
             android:textColor="#ffadadad"
-            android:textSize="10.0sp"
+            android:textSize="15dp"
             android:visibility="gone" />
 
         <android.support.v7.widget.RecyclerView

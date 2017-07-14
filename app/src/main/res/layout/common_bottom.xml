@@ -99,9 +99,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="20dp"
                 android:gravity="center"
+                android:enabled="false"
                 android:paddingTop="2dp"
                 android:text="3"
-                android:textColor="#44000000" />
+                android:textColor="@drawable/text_color_selector" />
 
         </LinearLayout>
 
@@ -127,7 +128,8 @@
                 android:gravity="center"
                 android:paddingTop="2dp"
                 android:text="124"
-                android:textColor="#44000000" />
+                android:enabled="false"
+                android:textColor="@drawable/text_color_selector" />
 
         </LinearLayout>
     </LinearLayout>

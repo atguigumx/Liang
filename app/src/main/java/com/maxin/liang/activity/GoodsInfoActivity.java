@@ -5,21 +5,31 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.alibaba.fastjson.JSONObject;
 import com.bumptech.glide.Glide;
+import com.hyphenate.chat.EMClient;
 import com.maxin.liang.R;
 import com.maxin.liang.bean.shop.GoodsInfosBean;
+import com.maxin.liang.common.Modle;
+import com.maxin.liang.login.UserInfo;
 import com.maxin.liang.utils.AdapterUtils;
+import com.maxin.liang.utils.VirtualkeyboardHeight;
 import com.youth.banner.Banner;
 import com.youth.banner.loader.ImageLoader;
 import com.zhy.http.okhttp.OkHttpUtils;
@@ -97,8 +107,8 @@ public class GoodsInfoActivity extends BaseActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(GoodsInfoActivity.this, BrandInfoActivity.class);
-                intent.putExtra(BRANDID,Integer.parseInt(items.getBrand_info().getBrand_id()));
-                Log.e("GoodsInfoActivity", ""+items.getBrand_info().getBrand_id());
+                intent.putExtra(BRANDID, Integer.parseInt(items.getBrand_info().getBrand_id()));
+                Log.e("GoodsInfoActivity", "" + items.getBrand_info().getBrand_id());
                 startActivity(intent);
             }
         });
@@ -121,13 +131,113 @@ public class GoodsInfoActivity extends BaseActivity {
             }
         });
         rgGoodsDetails.check(R.id.rb_goods_details);
-
         ivShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 showShare();
             }
         });
+
+
+        llSelectSize.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showPopWindow();
+            }
+        });
+
+        rbAddCart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showPopWindow();
+            }
+        });
+
+        rbBuy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showPopWindow();
+            }
+        });
+        ibBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+        ibCart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                selectChageActivity();
+            }
+        });
+    }
+
+    private void showPopWindow() {
+        //是否登录过环信服务器
+        boolean loggedInBefore = EMClient.getInstance().isLoggedInBefore();
+        if (loggedInBefore) {
+            //登录过
+            LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            View view = inflater.inflate(R.layout.popupwindow_add_product, null);
+
+            final PopupWindow window = new PopupWindow(view,
+                    WindowManager.LayoutParams.MATCH_PARENT,
+                    WindowManager.LayoutParams.MATCH_PARENT);
+
+            window.setFocusable(true);
+
+            window.setAnimationStyle(R.style.AnimBottom);
+            ImageView goodsPicture = (ImageView) view.findViewById(R.id.iv_popgoods_picture);
+            ImageView chahao = (ImageView) view.findViewById(R.id.pop_chahao);
+            TextView name = (TextView) view.findViewById(R.id.tv_popgoods_name);
+            TextView desc = (TextView) view.findViewById(R.id.tv_popgoods_desc);
+            TextView price = (TextView) view.findViewById(R.id.tv_popgoods_price);
+            Button queren = (Button) view.findViewById(R.id.btn_popqueren);
+
+            Glide.with(GoodsInfoActivity.this).load(items.getGoods_image()).into(goodsPicture);
+            desc.setText(items.getGoods_name());
+            name.setText(items.getOwner_name());
+            if (items.getDiscount_price().equals("")) {
+                price.setText("￥ " + items.getPrice());
+            } else {
+                price.setText("￥ " + items.getDiscount_price());
+            }
+
+            chahao.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    window.dismiss();
+                }
+            });
+            queren.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Toast.makeText(GoodsInfoActivity.this, "加入购物车", Toast.LENGTH_SHORT).show();
+                    window.dismiss();
+                }
+            });
+
+            window.setOnDismissListener(new PopupWindow.OnDismissListener() {
+                @Override
+                public void onDismiss() {
+                    window.dismiss();
+                }
+            });
+            //在底部显示
+            window.showAtLocation(GoodsInfoActivity.this.findViewById(R.id.rg_buy_cart),
+                    Gravity.BOTTOM, 0, VirtualkeyboardHeight.getBottomStatusHeight(GoodsInfoActivity.this));
+
+        } else {
+            //没有登录过
+            startActivity(new Intent(GoodsInfoActivity.this, LoginActivity.class));
+
+        }
+
+
+
+
+
     }
 
     private void setDetails() {
@@ -150,7 +260,7 @@ public class GoodsInfoActivity extends BaseActivity {
         for (int i = 0; i < goods_info.size(); i++) {
             GoodsInfosBean.DataBean.ItemsBean.GoodsInfoBean goodsInfoBean = goods_info.get(i);
             GoodsInfosBean.DataBean.ItemsBean.GoodsInfoBean.ContentBean content = goodsInfoBean.getContent();
-            String text =content.getText();
+            String text = content.getText();
             String img = content.getImg();
             if (!TextUtils.isEmpty(img)) {
                 ImageView imageView = new ImageView(this);
@@ -211,10 +321,10 @@ public class GoodsInfoActivity extends BaseActivity {
         if (items != null) {
             if (items.getDiscount_price().equals("")) {
                 rlPrice.setVisibility(View.GONE);
-                discountPrice.setText(items.getPrice());
-            }else {
-                discountPrice.setText(items.getDiscount_price());
-                prePrice.setText(items.getPrice());
+                discountPrice.setText("￥ " + items.getPrice());
+            } else {
+                discountPrice.setText("￥ " + items.getDiscount_price());
+                prePrice.setText("￥ " + items.getPrice());
             }
             banner.setImages(items.getImages_item())
                     .setImageLoader(new ImageLoader() {
@@ -225,16 +335,19 @@ public class GoodsInfoActivity extends BaseActivity {
                     })
                     .isAutoPlay(false)
                     .start();
+            tvLikeCount.setText(items.getLike_count());
+            tvGoodsName.setText(items.getBrand_info().getBrand_name());
+            tvDesc.setText(items.getGoods_name());
+            tvCom.setText(items.getPromotion_note());
 
+            Glide.with(this).load(items.getBrand_info().getBrand_logo()).into(ivLogo);
+            tvBrandName.setText(items.getBrand_info().getBrand_name());
+            tvBuyKnow.setText(items.getGood_guide().getContent());
+
+
+            setDetails();
         }
-        tvLikeCount.setText(items.getLike_count());
-        tvGoodsName.setText(items.getBrand_info().getBrand_name());
-        tvDesc.setText(items.getGoods_name());
-        tvCom.setText(items.getPromotion_note());
 
-        Glide.with(this).load(items.getBrand_info().getBrand_logo()).into(ivLogo);
-        tvBrandName.setText(items.getBrand_info().getBrand_name());
-        tvBuyKnow.setText(items.getGood_guide().getContent());
     }
 
 
@@ -271,4 +384,26 @@ public class GoodsInfoActivity extends BaseActivity {
         oks.show(this);
     }
 
+    public void selectChageActivity() {
+
+        Modle.getInstance().getGlobalThread().execute(new Runnable() {
+            @Override
+            public void run() {
+                //是否登录过环信服务器
+                boolean loggedInBefore = EMClient.getInstance().isLoggedInBefore();
+                if (loggedInBefore) {
+                    //登录过
+                    //初始化登录成功后的操作
+                    String currentUser = EMClient.getInstance().getCurrentUser();
+                    Modle.getInstance().loginSuccess(new UserInfo(currentUser, currentUser));
+                    startActivity(new Intent(GoodsInfoActivity.this, ShopCartActivity.class));
+
+                } else {
+                    //没有登录过
+                    startActivity(new Intent(GoodsInfoActivity.this, LoginActivity.class));
+
+                }
+            }
+        });
+    }
 }

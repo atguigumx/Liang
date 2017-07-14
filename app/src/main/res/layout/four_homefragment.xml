@@ -5,21 +5,25 @@
     <ImageView
         android:scaleType="fitXY"
         android:id="@+id/fourhome_one"
+        android:layout_weight="1"
         android:layout_width="190dp"
         android:layout_height="200dp" />
     <ImageView
+        android:layout_weight="1"
         android:scaleType="fitXY"
         android:layout_below="@+id/fourhome_one"
         android:id="@+id/fourhome_two"
         android:layout_width="190dp"
         android:layout_height="150dp" />
     <ImageView
+        android:layout_weight="1"
         android:scaleType="fitXY"
         android:layout_toRightOf="@+id/fourhome_one"
         android:id="@+id/fourhome_three"
         android:layout_width="190dp"
         android:layout_height="150dp" />
     <ImageView
+        android:layout_weight="1"
         android:scaleType="fitXY"
         android:id="@+id/fourhome_four"
         android:layout_toRightOf="@+id/fourhome_two"

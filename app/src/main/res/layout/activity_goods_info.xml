@@ -62,7 +62,7 @@
                         android:gravity="center"
                         android:textColor="#88ffffff"
                         android:textSize="12sp"
-                        tools:text="876" />
+                         />
                 </LinearLayout>
             </LinearLayout>
 
@@ -81,7 +81,6 @@
                         android:id="@+id/tv_desc"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="d"
                         android:textColor="#fff"
                         android:textSize="16sp" />
 
@@ -89,7 +88,6 @@
                         android:id="@+id/tv_com"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="d"
                         android:textColor="#40668d"
                         android:textSize="14sp" />
                 </LinearLayout>
@@ -113,13 +111,14 @@
                     android:id="@+id/discount_price"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text="$389"
                     android:textColor="#40668d"
                     android:textSize="22sp" />
 
                 <RelativeLayout
+                    android:layout_marginTop="5dp"
+                    android:layout_gravity="center"
                     android:id="@+id/rl_price"
-                    android:layout_width="100dp"
+                    android:layout_width="70dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp">
 
@@ -128,13 +127,12 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:gravity="center"
-                        android:text="$389.00"
                         android:textColor="#40668d"
-                        android:textSize="22sp" />
+                        android:textSize="15sp" />
 
                     <View
                         android:layout_width="match_parent"
-                        android:layout_height="2dp"
+                        android:layout_height="1dp"
                         android:layout_centerInParent="true"
                         android:background="#40668d" />
                 </RelativeLayout>
@@ -203,11 +201,19 @@
                     android:src="@drawable/ic_pack_selected" />
 
                 <TextView
+                    android:layout_weight="1"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:text="选择 尺码 颜色 数量"
                     android:textColor="#fff" />
+
+                <ImageView
+                    android:layout_marginRight="5dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/arrow_right"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
             </LinearLayout>
 
             <LinearLayout
@@ -225,17 +231,23 @@
                     android:layout_width="55dp"
                     android:layout_height="match_parent"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/brand_logo_empty" />
+                     />
 
                 <TextView
+                    android:layout_weight="1"
                     android:id="@+id/tv_brand_name"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="10dp"
-                    android:gravity="center"
-                    android:text="选择 尺码 颜色 数量"
+                    android:layout_marginTop="15dp"
                     android:textColor="#66ffffff"
                     android:textSize="18sp" />
+                <ImageView
+                    android:layout_marginRight="5dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/arrow_right"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
             </LinearLayout>
 
             <RadioGroup
@@ -287,7 +299,6 @@
                     android:layout_marginRight="10dp"
                     android:layout_marginTop="30dp"
                     android:lineSpacingMultiplier="1.5"
-                    android:text="你的弗兰克大家分开睡的f快放假了的看法旅客的肌肤的立刻离开就离开健康带来几分恐惧空间里发生的 离开的减肥了"
                     android:textColor="#fff"
                     android:textSize="16sp"
                     android:visibility="gone" />
@@ -326,7 +337,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="4"
-            android:background="#336A8E"
+            android:background="#3A5780"
             android:button="@null"
             android:gravity="center"
             android:text="加入购物车"
@@ -338,7 +349,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="4"
-            android:background="#40668d"
+            android:background="#487794"
             android:button="@null"
             android:gravity="center"
             android:text="立即购买"

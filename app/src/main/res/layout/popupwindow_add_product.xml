@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:background="#40000000"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"></LinearLayout>
+        <RelativeLayout
+            android:background="@android:color/black"
+            android:layout_weight="5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/pop_chahao"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/chahao"
+                android:layout_alignParentRight="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="140dp"
+        android:layout_height="140dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="60dp"
+        android:id="@+id/iv_popgoods_picture" />
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_below="@+id/iv_popgoods_picture"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/tv_popgoods_name"
+            android:textSize="20dp"
+            android:textColor="@android:color/white"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
+        <TextView
+            android:layout_marginTop="10dp"
+            android:id="@+id/tv_popgoods_desc"
+            android:textSize="10dp"
+            android:textColor="@android:color/white"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
+        <TextView
+            android:layout_marginTop="10dp"
+            android:textColor="#336A8E"
+            android:id="@+id/tv_popgoods_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="23dp"
+            />
+        <View
+            android:layout_marginTop="40dp"
+            android:background="@android:color/white"
+            android:layout_width="match_parent"
+            android:layout_height="0.1dp"/>
+        <TextView
+            android:textSize="10dp"
+            android:layout_marginTop="10dp"
+            android:text="数量"
+            android:textColor="@android:color/white"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <LinearLayout
+            android:background="#336A8E"
+            android:layout_marginTop="10dp"
+            android:layout_width="30dp"
+            android:layout_height="20dp">
+
+            <TextView
+                android:id="@+id/tv_popshuliang"
+                android:layout_marginLeft="5dp"
+                android:layout_gravity="center"
+                android:text="一只"
+                android:textSize="10dp"
+                android:textColor="@android:color/white"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+        <TextView
+            android:textSize="10dp"
+            android:layout_marginTop="10dp"
+            android:text="数量"
+            android:textColor="@android:color/white"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <com.maxin.liang.view.AddSubView
+            android:layout_marginTop="10dp"
+            android:id="@+id/pop_addsubview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"></com.maxin.liang.view.AddSubView>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_popqueren"
+        android:layout_alignParentBottom="true"
+        android:textColor="@android:color/white"
+        android:text="确认"
+        android:background="#336A8E"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+</RelativeLayout>

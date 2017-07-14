@@ -91,4 +91,9 @@
         <item name="android:textColor">@color/text_press_selector2</item>
 
     </style>
+
+    <style name="MyEditText" parent="Theme.AppCompat.Light">
+        <item name="colorControlNormal">@android:color/white</item>
+        <item name="colorControlActivated">@android:color/white</item>
+    </style>
 </resources>

@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
@@ -36,9 +37,9 @@ public class BrandInfoActivity extends BaseActivity {
     @Bind(R.id.brand_name)
     TextView brandName;
     @Bind(R.id.brand_story_tv)
-    TextView brandStoryTv;
+    RadioButton brandStoryTv;
     @Bind(R.id.brand_goods_tv)
-    TextView brandGoodsTv;
+    RadioButton brandGoodsTv;
     @Bind(R.id.brand_story_content_tv)
     TextView brandStoryContentTv;
     @Bind(R.id.recycle)

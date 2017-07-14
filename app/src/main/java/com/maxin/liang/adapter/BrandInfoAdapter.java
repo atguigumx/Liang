@@ -49,7 +49,7 @@ public class BrandInfoAdapter extends RecyclerView.Adapter<BrandInfoAdapter.MyHo
         itemsBean = items.get(position);
         holder.tvLikeItemGoodslist.setText(itemsBean.getLike_count());
         Glide.with(context).load(itemsBean.getGoods_image()).into(holder.ivItemGoodslist);
-        holder.tvPriceItemGoodslist.setText(itemsBean.getPrice());
+        holder.tvPriceItemGoodslist.setText("￥ "+itemsBean.getPrice());
         holder.tvJieshaoItemGoodslist.setText(itemsBean.getGoods_name());
         holder.tvNameItemGoodslist.setText(itemsBean.getBrand_info().getBrand_name());
     }

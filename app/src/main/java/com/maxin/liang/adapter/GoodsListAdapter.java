@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -23,17 +24,19 @@ import static com.maxin.liang.fragment.shopfragment.TypeFragment.POSITION;
 /**
  * Created by shkstart on 2017/7/6.
  */
-public class GoodsListAdapter extends RecyclerView.Adapter<GoodsListAdapter.MyviewHorlder>{
+public class GoodsListAdapter extends RecyclerView.Adapter<GoodsListAdapter.MyviewHorlder> {
     public static final String POSITIONID = "position_id";
     private final Context context;
     private final List<GoodsListBean.DataBean.ItemsBean> items;
+
     private GoodsListBean.DataBean.ItemsBean itemsBean;
 
-    public GoodsListAdapter(Context context, List items){
-        this.context=context;
-        this.items=items;
+    public GoodsListAdapter(Context context, List items) {
+        this.context = context;
+        this.items = items;
 
     }
+
     @Override
     public MyviewHorlder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = View.inflate(context, R.layout.item_goodslist, null);
@@ -45,14 +48,22 @@ public class GoodsListAdapter extends RecyclerView.Adapter<GoodsListAdapter.Myvi
         itemsBean = items.get(position);
         holder.tvLikeItemGoodslist.setText(itemsBean.getLike_count());
         Glide.with(context).load(itemsBean.getGoods_image()).into(holder.ivItemGoodslist);
-        holder.tvPriceItemGoodslist.setText(itemsBean.getPrice());
+        if(itemsBean.getDiscount_price().equals("")) {
+            holder.tvPriceItemGoodslist.setText("￥ " + itemsBean.getPrice());
+            holder.rlDisconuntPrice.setVisibility(View.GONE);
+        }else {
+            holder.rlDisconuntPrice.setVisibility(View.VISIBLE);
+            holder.tvPriceItemGoodslist.setText("￥ " + itemsBean.getDiscount_price());
+            holder.tvDiscountPriceItemGoodslist.setText("￥ " + itemsBean.getPrice());
+        }
+
         holder.tvJieshaoItemGoodslist.setText(itemsBean.getGoods_name());
         holder.tvNameItemGoodslist.setText(itemsBean.getBrand_info().getBrand_name());
     }
 
     @Override
     public int getItemCount() {
-        return items==null?0:items.size();
+        return items == null ? 0 : items.size();
     }
 
     class MyviewHorlder extends RecyclerView.ViewHolder {
@@ -66,15 +77,18 @@ public class GoodsListAdapter extends RecyclerView.Adapter<GoodsListAdapter.Myvi
         TextView tvLikeItemGoodslist;
         @Bind(R.id.tv_price_item_goodslist)
         TextView tvPriceItemGoodslist;
-
+        @Bind(R.id.tv_discount_price_item_goodslist)
+        TextView tvDiscountPriceItemGoodslist;
+        @Bind(R.id.rl_disconunt_price)
+        RelativeLayout rlDisconuntPrice;
         public MyviewHorlder(View itemView) {
             super(itemView);
-            ButterKnife.bind(this,itemView);
+            ButterKnife.bind(this, itemView);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(context, GoodsInfoActivity.class);
-                    intent.putExtra(POSITION,items.get(getLayoutPosition()).getGoods_id());
+                    intent.putExtra(POSITION, items.get(getLayoutPosition()).getGoods_id());
                     context.startActivity(intent);
                 }
             });

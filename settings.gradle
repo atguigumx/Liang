@@ -1,2 +1,2 @@
-include ':app', ':jcvideoplayer-lib', ':PhotoView_library'
+include ':app', ':jcvideoplayer-lib', ':PhotoView_library', ':easeUI_CN'
 include ':viewpagerindicator-library'
