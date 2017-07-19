@@ -293,7 +293,7 @@ public class TuiJianAdapter extends RecyclerView.Adapter {
                     Intent intent = new Intent(context, TuiJianImageInfoActivity.class);
                     intent.putExtra(TUIJIANID,listBean.getId());
                     intent.putExtra(CONTEXT,listBean.getText());
-                    intent.putExtra(VIDEOURL,listBean.getGif().getDownload_url().get(0));
+                    intent.putExtra(VIDEOURL,listBean.getGif().getImages().get(0));
                     intent.putExtra(UP,listBean.getUp());
                     intent.putExtra(PASSTIME,listBean.getPasstime());
                     context.startActivity(intent);

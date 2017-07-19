@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.maxin.liang.login.AccountDAO;
 import com.maxin.liang.login.UserInfo;
+import com.maxin.liang.shopcar.DBHelperManager;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -18,7 +19,7 @@ public class Modle {
 
     private Modle(){}
     private static Modle modle=new Modle();
-
+    private DBHelperManager manager;
     public static Modle getInstance(){
         return modle;
     }
@@ -36,21 +37,16 @@ public class Modle {
     public void loginSuccess(UserInfo userInfo) {
         //添加用户
         accountDAO.addAccount(userInfo);
-        /*if(manager!=null) {
+        if (manager != null) {
             manager.close();
         }
-        //创建manager
-        manager = new HelperManager(context, userInfo.getUsername() + ".db");
-
-        //初始化SPUtils
-        SPUtils.getSPUtils().init(context,userInfo.getUsername());*/
+        manager = new DBHelperManager(context, userInfo.getUsername() + ".db");
     }
 
     public AccountDAO getAccountDAO(){
         return accountDAO;
     }
-    //返回manager
-   /* public HelperManager getHelperManager(){
+    public DBHelperManager getManager() {
         return manager;
-    }*/
+    }
 }

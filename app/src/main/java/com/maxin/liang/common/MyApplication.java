@@ -6,6 +6,7 @@ import android.os.Handler;
 
 import com.hyphenate.chat.EMOptions;
 import com.hyphenate.easeui.controller.EaseUI;
+import com.maxin.liang.utils.LayoutUtils;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.zhy.http.okhttp.OkHttpUtils;
@@ -38,6 +39,8 @@ public class MyApplication extends Application {
 
         JPushInterface.setDebugMode(true); 	// 设置开启日志,发布时请关闭日志
         JPushInterface.init(this);     		// 初始化 JPush
+
+        LayoutUtils.getInstance().init(this);
     }
 
     private void initOkhttp() {

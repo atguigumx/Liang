@@ -25,16 +25,23 @@ import com.alibaba.fastjson.JSONObject;
 import com.bumptech.glide.Glide;
 import com.hyphenate.chat.EMClient;
 import com.maxin.liang.R;
+import com.maxin.liang.bean.GoodsInfo;
 import com.maxin.liang.bean.shop.GoodsInfosBean;
 import com.maxin.liang.common.Modle;
 import com.maxin.liang.login.UserInfo;
+import com.maxin.liang.shopcar.CartStorage;
 import com.maxin.liang.utils.AdapterUtils;
+import com.maxin.liang.utils.LayoutUtils;
+import com.maxin.liang.utils.NetConfig;
 import com.maxin.liang.utils.VirtualkeyboardHeight;
+import com.maxin.liang.view.AddSubView;
+import com.maxin.liang.view.FlowLayout;
 import com.youth.banner.Banner;
 import com.youth.banner.loader.ImageLoader;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
+import java.util.HashMap;
 import java.util.List;
 
 import butterknife.Bind;
@@ -99,6 +106,15 @@ public class GoodsInfoActivity extends BaseActivity {
     RelativeLayout rlPrice;
     private String goods_url;
     private GoodsInfosBean.DataBean.ItemsBean items;
+    private HashMap<String, String> types;
+    private int line = -1;
+    private String tempAttrName;
+    private String keys = "";
+    private String type = "";
+    private String tempJ;
+    private List<GoodsInfosBean.DataBean.ItemsBean.SkuInvBean> skuInvs;
+    private int number =1;
+    private CartStorage dao;
 
     @Override
     public void initListener() {
@@ -174,6 +190,7 @@ public class GoodsInfoActivity extends BaseActivity {
     }
 
     private void showPopWindow() {
+        skuInvs = items.getSku_inv();
         //是否登录过环信服务器
         boolean loggedInBefore = EMClient.getInstance().isLoggedInBefore();
         if (loggedInBefore) {
@@ -192,17 +209,152 @@ public class GoodsInfoActivity extends BaseActivity {
             ImageView chahao = (ImageView) view.findViewById(R.id.pop_chahao);
             TextView name = (TextView) view.findViewById(R.id.tv_popgoods_name);
             TextView desc = (TextView) view.findViewById(R.id.tv_popgoods_desc);
-            TextView price = (TextView) view.findViewById(R.id.tv_popgoods_price);
+            final TextView price = (TextView) view.findViewById(R.id.tv_popgoods_price);
             Button queren = (Button) view.findViewById(R.id.btn_popqueren);
+            LinearLayout skuLl= (LinearLayout) view.findViewById(R.id.sku_ll);
+            AddSubView addSubView= (AddSubView) view.findViewById(R.id.pop_addsubview);
+            if(items!=null) {
+                Glide.with(GoodsInfoActivity.this).load(items.getGoods_image()).into(goodsPicture);
+                desc.setText(items.getGoods_name());
+                name.setText(items.getOwner_name());
 
-            Glide.with(GoodsInfoActivity.this).load(items.getGoods_image()).into(goodsPicture);
-            desc.setText(items.getGoods_name());
-            name.setText(items.getOwner_name());
-            if (items.getDiscount_price().equals("")) {
-                price.setText("￥ " + items.getPrice());
-            } else {
-                price.setText("￥ " + items.getDiscount_price());
+                if (items.getDiscount_price().equals("")) {
+                    price.setText("￥ " + items.getPrice());
+                } else {
+                    price.setText("￥ " + items.getDiscount_price());
+                }
+
+                List<GoodsInfosBean.DataBean.ItemsBean.SkuInfoBean> sku_info = items.getSku_info();
+                if (sku_info != null && sku_info.size() > 0) {
+                    types = new HashMap<String, String>();
+                    final HashMap<String, String> map = new HashMap<>();
+                    for (int i = 0; i < sku_info.size(); i++) {
+                        GoodsInfosBean.DataBean.ItemsBean.SkuInfoBean skuInfoBean = sku_info.get(i);
+
+                        final String type_name = skuInfoBean.getType_name();
+                        //数量  种类的布局
+                        final TextView textView = LayoutUtils.getInstance().getTextView(type_name);
+                        skuLl.addView(textView);
+
+                        List<GoodsInfosBean.DataBean.ItemsBean.SkuInfoBean.AttrListBean> attrList = skuInfoBean.getAttrList();
+                        if (attrList != null && attrList.size() > 0) {
+                            //流式布局 标签
+                            final FlowLayout flowLayout = LayoutUtils.getInstance().getFlowLayout();
+                            for (int j = 0; j < attrList.size(); j++) {
+                                String attr_name = attrList.get(j).getAttr_name();
+
+                                //将商品类型存储进types集合
+                                types.put(i + attr_name, type_name + ": " + attr_name + "; ");
+
+                                //缓存商品类型的id
+                                map.put(i + attr_name, attrList.get(j).getAttr_id());
+                                //创建标签textview
+                                final TextView tv = LayoutUtils.getInstance().getTextView(attr_name);
+
+                                tv.setBackgroundDrawable(getResources().getDrawable(R.drawable.goods_selector));
+                                tv.setTextSize(AdapterUtils.dp2sp(this, 10));
+                                tv.setPadding(AdapterUtils.dip2px(this, 20),
+                                        AdapterUtils.dip2px(this, 8),
+                                        AdapterUtils.dip2px(this, 20),
+                                        AdapterUtils.dip2px(this, 8)
+                                );
+
+                                //将id设置给对应的view
+                                tv.setTag(i + attr_name);
+                                flowLayout.addView(tv);
+                                //view的点击事件
+                                tv.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        //实现选择器的切换
+                                        for (int z = 0; z < flowLayout.getChildCount(); z++) {
+                                            if (flowLayout.getChildAt(z) == view) {
+                                                view.setSelected(true);
+                                                view.setEnabled(false);
+                                            } else {
+                                                flowLayout.getChildAt(z).setSelected(false);
+                                                flowLayout.getChildAt(z).setEnabled(true);
+                                            }
+                                        }
+
+                                        String attr_name = (String) view.getTag();
+
+                                        int i = Integer.parseInt(attr_name.substring(0, 1));
+                                        String attr_id = map.get(attr_name);
+                                        String t = types.get(attr_name);
+                                        if (i != line) {
+                                            if (!attr_name.equals(tempAttrName)) {
+                                                type = tempAttrName + t;
+                                            }
+                                            if (i == 0) {
+                                                keys = attr_id + "," + tempJ;
+                                            } else {
+                                                keys = tempJ + "," + attr_id;
+                                            }
+                                        } else {
+
+                                            String[] key = keys.split(",");
+                                            if (key != null && key.length > 0) {
+
+                                                key[i] = "" + attr_id;
+                                                keys = "";
+                                                for (int z = 0; z < key.length; z++) {
+                                                    if (z == key.length - 1) {
+                                                        keys += key[key.length - 1];
+                                                        break;
+                                                    }
+                                                    keys += key[z] + ",";
+                                                }
+                                            }
+
+                                            String[] split = type.split(";");
+                                            if (split != null && split.length - 1 > 0) {
+                                                split[i] = t.replace(";", "");
+                                                type = "";
+                                                for (int z = 0; z < split.length; z++) {
+                                                    if (!TextUtils.isEmpty(split[z])) {
+                                                        type += split[z] + ";";
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        Log.e("TAG", "type==" + type + "--key==" + keys);
+                                        line = i;
+                                        tempJ = attr_id;
+                                        tempAttrName = t;
+
+                                        if (skuInvs != null && skuInvs.size() > 0) {
+                                            for (GoodsInfosBean.DataBean.ItemsBean.SkuInvBean info : skuInvs) {
+                                                if (info.getAttr_keys().equals(keys)) {
+                                                    String discountPrice = info.getDiscount_price();
+                                                    if (TextUtils.isEmpty(discountPrice)) {
+                                                        price.setText("￥ " + items.getPrice());
+                                                    } else {
+                                                        price.setText("￥ " + discountPrice);
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                });
+
+                            }
+                            skuLl.addView(flowLayout);
+                        }
+                    }
+                }
             }
+
+
+
+            addSubView.setOnNumberChangeListener(new AddSubView.OnNumberChangeListener() {
+
+
+                @Override
+                public void numberChange(int value) {
+                    GoodsInfoActivity.this.number=value;
+                }
+            });
 
             chahao.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -213,6 +365,21 @@ public class GoodsInfoActivity extends BaseActivity {
             queren.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    GoodsInfo goodsInfo = getGoodsInfo();
+                    goodsInfo.setGoodsNumber(number);
+                    if (!TextUtils.isEmpty(type)) {
+                        goodsInfo.setGoodsType(type);
+                    }
+                    if (skuInvs != null && skuInvs.size() > 0) {
+                        for (GoodsInfosBean.DataBean.ItemsBean.SkuInvBean info : skuInvs) {
+                            if (info.getAttr_keys().equals(keys)) {
+                                goodsInfo.setGoodsPrice(info.getPrice());
+                                goodsInfo.setGoodsDiscountPrice(info.getDiscount_price());
+                                goodsInfo.setGoosId(goodsInfo.getGoosId() + info.getAttr_keys());
+                            }
+                        }
+                    }
+                    dao.addGoods(goodsInfo);
                     Toast.makeText(GoodsInfoActivity.this, "加入购物车", Toast.LENGTH_SHORT).show();
                     window.dismiss();
                 }
@@ -239,6 +406,23 @@ public class GoodsInfoActivity extends BaseActivity {
 
 
     }
+    private GoodsInfo getGoodsInfo() {
+        final GoodsInfo goodsInfo = new GoodsInfo();
+        goodsInfo.setGoosId(items.getGoods_id());
+        goodsInfo.setGoodsName(items.getGoods_name());
+        goodsInfo.setGoodsLogo(items.getGoods_image());
+        goodsInfo.setGoodsUrl(NetConfig.BRAND_GOODS_DETAILS_URL + items.getGoods_id());
+        goodsInfo.setGoodsPrice(items.getPrice());
+        String discount_price = items.getDiscount_price();
+        if (!TextUtils.isEmpty(discount_price)) {
+            goodsInfo.setGoodsDiscountPrice(discount_price);
+        }
+        goodsInfo.setGoodsShopId(items.getBrand_info().getBrand_id());
+        goodsInfo.setGoodsNumber(number);
+
+        return goodsInfo;
+    }
+
 
     private void setDetails() {
         List<GoodsInfosBean.DataBean.ItemsBean.GoodsInfoBean> goods_info = items.getGoods_info();
@@ -291,7 +475,7 @@ public class GoodsInfoActivity extends BaseActivity {
         String goodsId = getIntent().getStringExtra(POSITION);
         String goodsUrl = "http://mobile.iliangcang.com/goods/goodsDetail?app_key=Android&goods_id=" + goodsId + "&sig=430BD99E6C913B8B8C3ED109737ECF15|830952120106768&v=1.0";
         getDataFromNet(goodsUrl);
-
+        dao = Modle.getInstance().getManager().getShoppingCarDao();
     }
 
     private void getDataFromNet(String goodsInfoIdurl) {

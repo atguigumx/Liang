@@ -61,7 +61,10 @@ public class AdapterUtils {
         final float fontScale = context.getResources().getDisplayMetrics().scaledDensity;
         return (int) (pxValue / fontScale + 0.5f);
     }
-
+    public static int dp2sp(Context context, float pxValue) {
+        final float fontScale = context.getResources().getDisplayMetrics().scaledDensity;
+        return (int) (dip2px(context,pxValue) / fontScale + 0.5f);
+    }
     /**
      * 转为圆形图片
      *
