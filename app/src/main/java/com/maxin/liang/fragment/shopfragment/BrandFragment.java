@@ -1,5 +1,6 @@
 package com.maxin.liang.fragment.shopfragment;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -8,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -36,7 +38,7 @@ public class BrandFragment extends Fragment {
     public static final String BRANDID = "brand_id";
     @Bind(R.id.listview_brand)
     ListView listviewBrand;
-    private List<BrandBean.DataBean.ItemsBean> items;
+
     private MyAdapter myAdapter;
 
     @Nullable
@@ -69,11 +71,21 @@ public class BrandFragment extends Fragment {
 
     private void processData(String response) {
         BrandBean brandBean = JSON.parseObject(response, BrandBean.class);
-        items = brandBean.getData().getItems();
+        final List<BrandBean.DataBean.ItemsBean> items = brandBean.getData().getItems();
         if (items.size() > 0 && items != null) {
-            myAdapter = new MyAdapter();
+            myAdapter = new MyAdapter(getActivity(),items);
             listviewBrand.setAdapter(myAdapter);
         }
+        listviewBrand.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                BrandBean.DataBean.ItemsBean itemsBean = items.get(i);
+                Intent intent = new Intent(getActivity(), BrandInfoActivity.class);
+                intent.putExtra(BRANDID,itemsBean.getBrand_id());
+                Log.e("BrandFragment", ""+itemsBean.getBrand_id());
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -83,6 +95,14 @@ public class BrandFragment extends Fragment {
     }
 
     class MyAdapter extends BaseAdapter {
+
+        private final Context context;
+        private final List<BrandBean.DataBean.ItemsBean> items;
+
+        public MyAdapter(Context context, List<BrandBean.DataBean.ItemsBean> items) {
+            this.context=context;
+            this.items=items;
+        }
 
         @Override
         public int getCount() {
@@ -103,14 +123,14 @@ public class BrandFragment extends Fragment {
         public View getView(int i, View view, ViewGroup viewGroup) {
             ViewHolder viewHolder;
             if (view == null) {
-                view = View.inflate(getActivity(), R.layout.brand_item, null);
-                viewHolder=new ViewHolder(view,items.get(i));
+                view = View.inflate(context, R.layout.brand_item, null);
+                viewHolder=new ViewHolder(view);
                 view.setTag(viewHolder);
             }else {
                 viewHolder= (ViewHolder) view.getTag();
             }
             viewHolder.tvBrandItem.setText(items.get(i).getBrand_name());
-            Glide.with(getActivity())
+            Glide.with(context)
                     .load(items.get(i).getBrand_logo()).into(viewHolder.ivBrandItem);
             return view;
         }
@@ -121,17 +141,9 @@ public class BrandFragment extends Fragment {
             @Bind(R.id.tv_brand_item)
             TextView tvBrandItem;
 
-            ViewHolder(View view, final BrandBean.DataBean.ItemsBean itemsBean) {
+            ViewHolder(View view) {
                 ButterKnife.bind(this, view);
-                view.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Intent intent = new Intent(getActivity(), BrandInfoActivity.class);
-                        intent.putExtra(BRANDID,itemsBean.getBrand_id());
-                        Log.e("BrandFragment", ""+itemsBean.getBrand_id());
-                        startActivity(intent);
-                    }
-                });
+
             }
         }
     }

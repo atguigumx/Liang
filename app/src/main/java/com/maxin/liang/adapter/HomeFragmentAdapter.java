@@ -1,21 +1,24 @@
 package com.maxin.liang.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.maxin.liang.R;
+import com.maxin.liang.activity.WebViewActivity;
 import com.maxin.liang.bean.HomeBean;
 
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+
+import static com.maxin.liang.adapter.SpecialAdapter.POSITIONURL;
 
 /**
  * Created by shkstart on 2017/7/7.
@@ -96,12 +99,14 @@ public class HomeFragmentAdapter extends RecyclerView.Adapter {
 
         }
 
-        public void setData(HomeBean.DataBean.ItemsBean.ListBeanX listBean) {
+        public void setData(final HomeBean.DataBean.ItemsBean.ListBeanX listBean) {
             Glide.with(context).load(listBean.getOne().getPic_url()).into(onehomefragmentIv);
             onehomefragmentIv.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Toast.makeText(context, "点击", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(context, WebViewActivity.class);
+                    intent.putExtra(POSITIONURL,listBean.getOne().getTopic_url());
+                    context.startActivity(intent);
                 }
             });
         }
@@ -124,12 +129,43 @@ public class HomeFragmentAdapter extends RecyclerView.Adapter {
             this.context = context;
         }
 
-        public void setData(HomeBean.DataBean.ItemsBean.ListBeanX listBean) {
+        public void setData(final HomeBean.DataBean.ItemsBean.ListBeanX listBean) {
             Glide.with(context).load(listBean.getOne().getPic_url()).into(fourhomeOne);
             Glide.with(context).load(listBean.getTwo().getPic_url()).into(fourhomeTwo);
             Glide.with(context).load(listBean.getThree().getPic_url()).into(fourhomeThree);
             Glide.with(context).load(listBean.getFour().getPic_url()).into(fourhomeFour);
-
+            fourhomeOne.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(context, WebViewActivity.class);
+                    intent.putExtra(POSITIONURL,listBean.getOne().getTopic_url());
+                    context.startActivity(intent);
+                }
+            });
+            fourhomeTwo.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(context, WebViewActivity.class);
+                    intent.putExtra(POSITIONURL,listBean.getTwo().getTopic_url());
+                    context.startActivity(intent);
+                }
+            });
+            fourhomeThree.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(context, WebViewActivity.class);
+                    intent.putExtra(POSITIONURL,listBean.getThree().getTopic_url());
+                    context.startActivity(intent);
+                }
+            });
+            fourhomeFour.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(context, WebViewActivity.class);
+                    intent.putExtra(POSITIONURL,listBean.getFour().getTopic_url());
+                    context.startActivity(intent);
+                }
+            });
         }
     }
 
@@ -146,9 +182,26 @@ public class HomeFragmentAdapter extends RecyclerView.Adapter {
             ButterKnife.bind(this, itemView);
         }
 
-        public void setData(HomeBean.DataBean.ItemsBean.ListBeanX listBean) {
+        public void setData(final HomeBean.DataBean.ItemsBean.ListBeanX listBean) {
             Glide.with(context).load(listBean.getOne().getPic_url()).into(twoFragmentOne);
             Glide.with(context).load(listBean.getTwo().getPic_url()).into(twoFragmentTwo);
+
+            twoFragmentOne.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(context, WebViewActivity.class);
+                    intent.putExtra(POSITIONURL,listBean.getOne().getTopic_url());
+                    context.startActivity(intent);
+                }
+            });
+            twoFragmentTwo.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(context, WebViewActivity.class);
+                    intent.putExtra(POSITIONURL,listBean.getTwo().getTopic_url());
+                    context.startActivity(intent);
+                }
+            });
         }
     }
 

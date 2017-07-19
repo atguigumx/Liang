@@ -84,7 +84,7 @@ public class BrandInfoActivity extends BaseActivity {
 
        //             http://mobile.iliangcang.com/brand/brandShopList?app_key=Android&brand_id=844&count=20&page=1&sig=430BD99E6C913B8B8C3ED109737ECF15|830952120106768&v=1.0
         String url = "http://mobile.iliangcang.com/brand/brandShopList?app_key=Android&brand_id="+brandId+"&count=20&page=1&sig=430BD99E6C913B8B8C3ED109737ECF15|830952120106768&v=1.0";
-        Log.e("TAG"+brandId, ""+url);
+        //Log.e("TAG"+brandId, ""+url);
         getDataFromNet(url);
     }
 
