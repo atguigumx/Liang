@@ -80,7 +80,7 @@
             android:button="@null"
             android:drawableTop="@drawable/my_selector"
             android:gravity="center"
-            android:text="个人"
+            android:text="直播"
             android:textSize="10dp"
             android:textColor="@drawable/text_selector"
 

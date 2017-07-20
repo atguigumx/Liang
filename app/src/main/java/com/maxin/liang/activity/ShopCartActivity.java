@@ -69,9 +69,9 @@ public class ShopCartActivity extends BaseActivity {
     @Override
     public void initView() {
         super.initView();
-        dao=Modle.getInstance().getManager().getShoppingCarDao();
+        dao = Modle.getInstance().getManager().getShoppingCarDao();
         List<GoodsInfo> allGoods = dao.getAllGoods();
-        adapter = new ShopCartAdapter(ShopCartActivity.this, allGoods,allCheck, dao, COMPLETE_PAGER, payFeeTv, saveFeeTv);
+        adapter = new ShopCartAdapter(ShopCartActivity.this, allGoods, allCheck, dao, COMPLETE_PAGER, payFeeTv, saveFeeTv);
         cartLv.setAdapter(adapter);
     }
 
@@ -89,20 +89,16 @@ public class ShopCartActivity extends BaseActivity {
     public int getLayoutId() {
         return R.layout.activity_shop_cart;
     }
-    @OnClick({R.id.ib_back, R.id.iv_edit, R.id.iv_complete, R.id.all_check})
+
+    @OnClick({R.id.ib_back, R.id.iv_edit, R.id.iv_complete, R.id.all_check,R.id.pay_tv})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.all_check:
                 boolean checked = allCheck.isChecked();
-                if(checked) {
-                    adapter.checkNone(checked);
-                    //adapter.checkAll();
-                    adapter.showTotalPrice();
-                }else {
-                    adapter.checkAll();
-                    adapter.showTotalPrice();
-                }
 
+                adapter.checkNone(checked);
+
+                adapter.showTotalPrice();
                 break;
             case R.id.ib_back:
                 finish();
@@ -124,6 +120,9 @@ public class ShopCartActivity extends BaseActivity {
                 adapter.checkNone(true);
                 adapter.checkAll();
                 adapter.showTotalPrice();
+                break;
+            case R.id.pay_tv:
+
                 break;
         }
     }

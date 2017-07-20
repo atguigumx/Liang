@@ -90,7 +90,7 @@ public class ShopCartAdapter extends BaseAdapter {
             for (int i = 0; i < items.size(); i++) {
                 GoodsInfo goodsInfo = items.get(i);
                 goodsInfo.setSelected(checked);
-
+                notifyDataSetChanged();
             }
         }
     }
@@ -99,67 +99,7 @@ public class ShopCartAdapter extends BaseAdapter {
         this.viewType=editPager;
     }
 
-    class DefultHorlder {
-        @Bind(R.id.cb_gov)
-        CheckBox cbGov;
-        @Bind(R.id.iv_gov)
-        ImageView ivGov;
-        @Bind(R.id.tv_desc_gov)
-        TextView tvDescGov;
-        @Bind(R.id.ll_size)
-        TextView llSize;
-        @Bind(R.id.tv_price_gov)
-        TextView tvPriceGov;
-        @Bind(R.id.tv_discount_price)
-        TextView tvDiscountPrice;
-        @Bind(R.id.tv_goods_number)
-        TextView tvGoodsNumber;
-        @Bind(R.id.ll_goods_car)
-        LinearLayout llGoodsCar;
 
-        private final Context context;
-
-        public DefultHorlder(Context context, View view) {
-            this.context = context;
-            ButterKnife.bind(this, view);
-        }
-
-        public void setData(final GoodsInfo goodsInfo) {
-            String goodsType = goodsInfo.getGoodsType();
-            if (!TextUtils.isEmpty(goodsType)) {
-                llSize.setText(goodsType);
-            }
-            cbGov.setChecked(goodsInfo.isSelected());
-            cbGov.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    goodsInfo.setSelected(!goodsInfo.isSelected());
-                    notifyDataSetChanged();
-                    showTotalPrice();
-                    checkAll();
-                }
-            });
-            tvDescGov.setText(goodsInfo.getGoodsName());
-            Glide.with(context).load(goodsInfo.getGoodsLogo()).into(ivGov);
-
-            tvGoodsNumber.setText("x " + goodsInfo.getGoodsNumber());
-            if (TextUtils.isEmpty(goodsInfo.getGoodsDiscountPrice())) {
-                tvDiscountPrice.setVisibility(View.GONE);
-                tvPriceGov.setText("￥" + goodsInfo.getGoodsPrice());
-            } else {
-                tvPriceGov.setText("￥" + goodsInfo.getGoodsDiscountPrice());
-                tvDiscountPrice.setText("￥" + goodsInfo.getGoodsPrice());
-                tvDiscountPrice.getPaint().
-                        setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);
-            }
-            llGoodsCar.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    context.startActivity(new Intent(context, GoodsInfoActivity.class).putExtra(POSITION, goodsInfo.getGoosId()));
-                }
-            });
-        }
-    }
 
     public void checkAll() {
         if (items != null && items.size() > 0) {
@@ -277,6 +217,66 @@ public class ShopCartAdapter extends BaseAdapter {
             });
         }
     }
+    class DefultHorlder {
+        @Bind(R.id.cb_gov)
+        CheckBox cbGov;
+        @Bind(R.id.iv_gov)
+        ImageView ivGov;
+        @Bind(R.id.tv_desc_gov)
+        TextView tvDescGov;
+        @Bind(R.id.ll_size)
+        TextView llSize;
+        @Bind(R.id.tv_price_gov)
+        TextView tvPriceGov;
+        @Bind(R.id.tv_discount_price)
+        TextView tvDiscountPrice;
+        @Bind(R.id.tv_goods_number)
+        TextView tvGoodsNumber;
+        @Bind(R.id.ll_goods_car)
+        LinearLayout llGoodsCar;
 
+        private final Context context;
+
+        public DefultHorlder(Context context, View view) {
+            this.context = context;
+            ButterKnife.bind(this, view);
+        }
+
+        public void setData(final GoodsInfo goodsInfo) {
+            String goodsType = goodsInfo.getGoodsType();
+            if (!TextUtils.isEmpty(goodsType)) {
+                llSize.setText(goodsType);
+            }
+            cbGov.setChecked(goodsInfo.isSelected());
+            cbGov.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    goodsInfo.setSelected(!goodsInfo.isSelected());
+                    notifyDataSetChanged();
+                    showTotalPrice();
+                    checkAll();
+                }
+            });
+            tvDescGov.setText(goodsInfo.getGoodsName());
+            Glide.with(context).load(goodsInfo.getGoodsLogo()).into(ivGov);
+
+            tvGoodsNumber.setText("x " + goodsInfo.getGoodsNumber());
+            if (TextUtils.isEmpty(goodsInfo.getGoodsDiscountPrice())) {
+                tvDiscountPrice.setVisibility(View.GONE);
+                tvPriceGov.setText("￥" + goodsInfo.getGoodsPrice());
+            } else {
+                tvPriceGov.setText("￥" + goodsInfo.getGoodsDiscountPrice());
+                tvDiscountPrice.setText("￥" + goodsInfo.getGoodsPrice());
+                tvDiscountPrice.getPaint().
+                        setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);
+            }
+            llGoodsCar.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    context.startActivity(new Intent(context, GoodsInfoActivity.class).putExtra(POSITION, goodsInfo.getGoosId()));
+                }
+            });
+        }
+    }
 
 }
