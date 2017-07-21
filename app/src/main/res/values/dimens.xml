@@ -2,4 +2,28 @@
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="navigation_avatar_size">74dp</dimen>
+    <dimen name="default_grow_margin">20dp</dimen>
+    <dimen name="default_general_margin">10dp</dimen>
+    <dimen name="default_tiny_padding">5dp</dimen>
+    <dimen name="default_small_text_size">14sp</dimen>
+    <dimen name="default_tiny_margin">3dp</dimen>
+    <dimen name="navigation_subtitle_secondary_text_size">14sp</dimen>
+    <dimen name="circle_user_small_size">34dp</dimen>
+    <dimen name="circle_default_width">1dp</dimen>
+    <dimen name="default_medium_text_size">16sp</dimen>
+    <dimen name="tab_layout_default_height">48dp</dimen>
+    <dimen name="general_banner_height">112.8dp</dimen>
+    <dimen name="live_entrance_image_size">50dp</dimen>
+    <dimen name="live_item_title_image_size">25dp</dimen>
+    <dimen name="card_margin">10dp</dimen>
+    <dimen name="card_corner_radius">2dp</dimen>
+    <dimen name="card_elevation">4dp</dimen>
+    <dimen name="live_item_layout_height">190dp</dimen>
+    <dimen name="live_item_image_height">120dp</dimen>
+    <dimen name="user_avatar_small_size">30dp</dimen>
+    <dimen name="video_info_count_text_margin_start">4dp</dimen>
+    <dimen name="default_tiny_text_size">10sp</dimen>
+    <dimen name="live_button_margin">60dp</dimen>
+    <dimen name="live_user_layout_height">70dp</dimen>
 </resources>
