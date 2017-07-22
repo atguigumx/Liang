@@ -6,10 +6,11 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="com.maxin.liang.bilibili.activity.LiveActivity">
-    <fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard
+    <com.maxin.liang.media.widget.media.IjkVideoView
         android:id="@+id/videoplayer"
         android:layout_width="match_parent"
-        android:layout_height="200dp"></fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard>
+        android:layout_height="200dp"
+        android:layout_gravity="center"/>
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"

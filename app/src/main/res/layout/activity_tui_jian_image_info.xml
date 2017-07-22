@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="com.maxin.liang.activity.tuijian.TuiJianVideoInfoActivity">
-    <uk.co.senab.photoview.PhotoView
+    <com.github.chrisbanes.photoview.PhotoView
         android:scaleType="center"
         android:id="@+id/jcv_infovideoplayer"
         android:layout_width="match_parent"

@@ -13,6 +13,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.github.chrisbanes.photoview.PhotoView;
 import com.maxin.liang.R;
 import com.maxin.liang.activity.tuijian.TuiJianImageInfoActivity;
 import com.maxin.liang.activity.tuijian.TuiJianTextInfoActivity;
@@ -27,7 +28,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard;
-import uk.co.senab.photoview.PhotoView;
+
 
 /**
  * Created by shkstart on 2017/7/10.

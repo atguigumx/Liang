@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.maxin.liang.R;
 import com.maxin.liang.bean.GoodsInfo;
 import com.maxin.liang.common.Modle;
+import com.maxin.liang.pay.Pay;
 import com.maxin.liang.shopcar.CartStorage;
 import com.maxin.liang.shopcar.ShopCartAdapter;
 
@@ -72,6 +73,7 @@ public class ShopCartActivity extends BaseActivity {
         dao = Modle.getInstance().getManager().getShoppingCarDao();
         List<GoodsInfo> allGoods = dao.getAllGoods();
         adapter = new ShopCartAdapter(ShopCartActivity.this, allGoods, allCheck, dao, COMPLETE_PAGER, payFeeTv, saveFeeTv);
+        adapter.showTotalPrice();
         cartLv.setAdapter(adapter);
     }
 
@@ -122,7 +124,8 @@ public class ShopCartActivity extends BaseActivity {
                 adapter.showTotalPrice();
                 break;
             case R.id.pay_tv:
-
+                Pay pay = new Pay(ShopCartActivity.this);
+                pay.pay();
                 break;
         }
     }

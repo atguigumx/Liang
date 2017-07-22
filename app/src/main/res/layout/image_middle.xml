@@ -16,7 +16,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="300dp">
-        <uk.co.senab.photoview.PhotoView
+        <com.github.chrisbanes.photoview.PhotoView
             android:id="@+id/iv_image_icon"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

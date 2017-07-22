@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
 import com.bumptech.glide.Glide;
+import com.github.chrisbanes.photoview.PhotoView;
 import com.maxin.liang.R;
 import com.maxin.liang.activity.BaseActivity;
 import com.maxin.liang.adapter.InfoTextAdapter;
@@ -20,7 +21,6 @@ import java.util.List;
 
 import butterknife.Bind;
 import okhttp3.Call;
-import uk.co.senab.photoview.PhotoView;
 
 import static com.maxin.liang.adapter.share.TuiJianAdapter.CONTEXT;
 import static com.maxin.liang.adapter.share.TuiJianAdapter.PASSTIME;
