@@ -119,7 +119,7 @@ public class ShopCartAdapter extends BaseAdapter {
         }
     }
 
-    private double getTotalFee() {
+    public double getTotalFee() {
         double value = 0;
         double preValue = 0;
         if (items != null && items.size() > 0) {

@@ -125,7 +125,7 @@ public class ShopCartActivity extends BaseActivity {
                 break;
             case R.id.pay_tv:
                 Pay pay = new Pay(ShopCartActivity.this);
-                pay.pay();
+                pay.pay(adapter.getTotalFee());
                 break;
         }
     }

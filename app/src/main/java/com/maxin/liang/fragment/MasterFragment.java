@@ -1,5 +1,6 @@
 package com.maxin.liang.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -21,6 +22,7 @@ import com.maxin.liang.R;
 import com.maxin.liang.adapter.MasterFragmentAdapter;
 import com.maxin.liang.bean.master.MasterBean;
 import com.maxin.liang.utils.VirtualkeyboardHeight;
+import com.uuzuche.lib_zxing.activity.CaptureActivity;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
@@ -38,6 +40,7 @@ import static com.maxin.liang.R.id.iv_title_search;
  */
 
 public class MasterFragment extends Fragment {
+    public static final int REQUEST_CODE = 33;
     @Bind(iv_title_search)
     ImageView ivTitleSearch;
     @Bind(R.id.tv_title)
@@ -66,6 +69,13 @@ public class MasterFragment extends Fragment {
             public void onClick(View view) {
                 showPopWindow();
 
+            }
+        });
+        ivTitleSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), CaptureActivity.class);
+                startActivityForResult(intent, REQUEST_CODE);
             }
         });
 

@@ -10,6 +10,7 @@ import com.hyphenate.easeui.controller.EaseUI;
 import com.maxin.liang.utils.LayoutUtils;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.uuzuche.lib_zxing.activity.ZXingLibrary;
 import com.zhy.http.okhttp.OkHttpUtils;
 
 import java.util.concurrent.TimeUnit;
@@ -42,6 +43,8 @@ public class MyApplication extends Application {
         JPushInterface.init(this);     		// 初始化 JPush
 
         LayoutUtils.getInstance().init(this);
+
+        ZXingLibrary.initDisplayOpinion(this);
     }
 
     private void initOkhttp() {

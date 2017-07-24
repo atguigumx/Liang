@@ -30,29 +30,13 @@ public class Pay {
         this.context=context;
     }
     // 商户PID
-    public static final String PARTNER = "2088911876712776";
+    public static final String PARTNER = "2088011085074233";
     // 商户收款账号
-    public static final String SELLER = "chenlei@atguigu.com";
+    public static final String SELLER = "917356107@qq.com";
     // 商户私钥，pkcs8格式
-    public static final String RSA_PRIVATE = "MIICdQIBADANBgkqhkiG9w0BAQEFAASCAl8wggJbAgEAAoGBAMpjX58B45FWljDZ\n" +
-            "3MhEf/ZqJiYiXtGDwx8ne74jSSYztfdC67YKtnx6T0afJLNZxWY4MME3bwgJ366c\n" +
-            "Ky2EypBI+uC50p8k0HfiMSjM0Uw5onQK+tpFr00cNJIU+MC1txS2cNGMnqa8jzUn\n" +
-            "QMbQJ4nC/k5sZqG/hWJ31jyY1LUrAgMBAAECgYBQH0EmuN+3lPjGhClUm1GxYtqR\n" +
-            "dD/nX+tqNP5XCq8V0ZjzN2oLWnheFSm3Qp+L5Tkxu4MJqwFoxEfqX2b0kUKDYYOj\n" +
-            "VBLAQwYLb1otKyisIoNUyeihIW/Iuc0HDDEbuJLOyjp6fR3pZKzHBtbgbZKx/2sW\n" +
-            "zqvVe8cXsow+bjGhkQJBAPicWMBTQjMBodH7eKBFdgGeXk5CVSKeCi7mjIzJd/QQ\n" +
-            "+yM5bNa69gejOsao/9TO2+oLZ22WtW0APYNpLa4/XskCQQDQZ1MAWrQpU6HIrXf/\n" +
-            "aoDJy/LLsd6KnONb6qR1P5NVpiVJcB8pbafmSOsi9FtgoVWQ6Kh68WP7zZBKtrdA\n" +
-            "3CpTAkBvz8luvkNgs1Q3H3VyB6t6MOLTKawmhJOp4lDGJPpJD7YTcolLzgxHBRez\n" +
-            "L2DYMizgBz7+H7D7FAeWaaB85M1ZAkBAaN63SlFKQIXM/wgKUcFSHQ2CNQwBrTF7\n" +
-            "tA52Clsf6oS1qMiIxlJRExJRMFKZj+NhMPb5YGe1aDgDT2tdyW3vAkAP/SASgTwT\n" +
-            "Dqem0cZenq/vcnuWEPldxssaJJwUXC2FgR9tEnrWYnhFY8f4VxKDxvuNnbUIiv3L\n" +
-            "/coNQ57KGWRH";
+    public static final String RSA_PRIVATE = "MIICdwIBADANBgkqhkiG9w0BAQEFAASCAmEwggJdAgEAAoGBAL51jaxQhxW9PnWpW+nz6yJ76tp9eGFXmfGnuxMK+Pmx/qavdsewXOLBfI2OSCR39TzxwMYvCmUrnrt0fVSa7mblbNos2FnMM9ijnx8bsAAhm+i7BKhuaHMunJKH69L+D753zH3P1YIh0ly5DnAr3WPqHydp384qBvb8NS9Tay0HAgMBAAECgYB82PIVknP6fCMFXg8yPQJViIVa1ASlSpdPIXQv93FdvKABA+QI4kMBIXRUFoCT506KtK55OzzFNOLIXoQJgcXj69z0l6pmjJJgXMaBW/9rOzelot13CiGatrIrGngEZO+bCBTud/jQA598zjZ1g182tT+FLDL7GIftW2hC8GqtAQJBAN+XrYsyfL+uSmLdAVEz1vzziU1naGr10Msm1jMnnO/JYdB+84j7FSHxsQ4YOgsmeN5YVsJcVfc/CReOxknns38CQQDaEHnVPDt+Z7sqT7bN0UKh0/CrqkDTiIjhz1lJyIIoqVRoeJjJn1wlEKBV5R9gkTJutQTVU19XFtblMEnOy6p5AkEAw170rEmMSa0QoHw+d2bVtydR1QnDapqqO6kOx5oYfkm4J4eWYx4J5CQdMpSmuzF9scL85E3sa+NvnV8LEm7cHwJALtXzFPWG4bNt47yTSslzQka/Hl/G5Kginj1mtA44xnr4AihEyKlNpThY95nqj1cgOd7vVtI9W/sv1LH2aFAeIQJBAIqXbMc6xGVfuiFAJKtg+AFNMBP0UOEgMEoKo4RPFp21nBhFgL9/WYM4ZjyHUdr45rCySAqQovw4DCHLfQZC23I=";
     // 支付宝公钥
-    public static final String RSA_PUBLIC = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDKY1+fAeORVpYw2dzIRH/2aiYm\n" +
-            "Il7Rg8MfJ3u+I0kmM7X3Quu2CrZ8ek9GnySzWcVmODDBN28ICd+unCsthMqQSPrg\n" +
-            "udKfJNB34jEozNFMOaJ0CvraRa9NHDSSFPjAtbcUtnDRjJ6mvI81J0DG0CeJwv5O\n" +
-            "bGahv4Vid9Y8mNS1KwIDAQAB";
+    public static final String RSA_PUBLIC = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC+dY2sUIcVvT51qVvp8+sie+rafXhhV5nxp7sTCvj5sf6mr3bHsFziwXyNjkgkd/U88cDGLwplK567dH1Umu5m5WzaLNhZzDPYo58fG7AAIZvouwSobmhzLpySh+vS/g++d8x9z9WCIdJcuQ5wK91j6h8nad/OKgb2/DUvU2stBwIDAQAB";
     private static final int SDK_PAY_FLAG = 1;
     @SuppressLint("HandlerLeak")
     private Handler mHandler = new Handler() {
@@ -91,7 +75,7 @@ public class Pay {
             }
         };
     };
-    public void pay() {
+    public void pay(double totalFee) {
         if (TextUtils.isEmpty(PARTNER) || TextUtils.isEmpty(RSA_PRIVATE) || TextUtils.isEmpty(SELLER)) {
             new AlertDialog.Builder(context).setTitle("警告").setMessage("需要配置PARTNER | RSA_PRIVATE| SELLER")
                     .setPositiveButton("确定", new DialogInterface.OnClickListener() {
@@ -102,7 +86,7 @@ public class Pay {
                     }).show();
             return;
         }
-        String orderInfo = getOrderInfo("粮仓", "商品", 0.1+"");
+        String orderInfo = getOrderInfo("粮仓", "商品", totalFee+"");
 
         /**
          * 特别注意，这里的签名逻辑需要放在服务端，切勿将私钥泄露在代码中！

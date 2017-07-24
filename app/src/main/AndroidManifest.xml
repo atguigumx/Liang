@@ -87,7 +87,10 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.SplashActivity">
+        <activity android:name=".activity.SplashActivity"
+            android:screenOrientation="portrait"
+            >
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -100,10 +103,14 @@
             android:screenOrientation="portrait" />
         <activity android:name=".activity.GoodsListActivity" />
         <activity android:name=".activity.GoodsInfoActivity" />
-        <activity android:name=".activity.WebViewActivity" />
+        <activity android:name=".activity.WebViewActivity"
+            android:screenOrientation="portrait"
+            />
         <activity android:name=".activity.MasterItemActivity" />
         <activity android:name=".activity.BrandInfoActivity" />
-        <activity android:name=".activity.MGZActivity" />
+        <activity android:name=".activity.MGZActivity"
+            android:screenOrientation="portrait"
+            />
         <activity android:name=".activity.tuijian.TuiJianVideoInfoActivity" />
         <activity android:name=".activity.tuijian.TuiJianTextInfoActivity" />
         <activity android:name=".activity.tuijian.TuiJianImageInfoActivity" />
