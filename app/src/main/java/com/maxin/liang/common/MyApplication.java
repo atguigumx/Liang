@@ -8,6 +8,7 @@ import android.support.multidex.MultiDex;
 import com.hyphenate.chat.EMOptions;
 import com.hyphenate.easeui.controller.EaseUI;
 import com.maxin.liang.utils.LayoutUtils;
+import com.mob.MobSDK;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.uuzuche.lib_zxing.activity.ZXingLibrary;
@@ -26,9 +27,16 @@ public class MyApplication extends Application {
     private static Context context;
     private static Handler handler;
     private static int pid;
+    protected String a(){
+        return null;
+    }
+    protected String b(){
+        return null;
+    }
     @Override
     public void onCreate() {
         super.onCreate();
+        MobSDK.init(this,this.a(),this.b());
         handler = new Handler();
         pid = android.os.Process.myPid();
         context=this;

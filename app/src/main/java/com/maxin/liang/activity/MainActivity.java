@@ -18,11 +18,14 @@ import com.maxin.liang.fragment.ShareFragment;
 import com.maxin.liang.fragment.ShopFragment;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import butterknife.Bind;
+import cn.smssdk.EventHandler;
+import cn.smssdk.SMSSDK;
 
 import static com.maxin.liang.fragment.mgzfragment.MGZAuthorFragment.MGZAUTHORNAME;
 import static com.maxin.liang.fragment.mgzfragment.MGZAuthorFragment.MGZCHEKID;
@@ -48,6 +51,7 @@ public class MainActivity extends BaseActivity {
     private int position;
     private String url;
     private String authorName;
+    private EventHandler eventHandler;
 
     @Override
     public void initListener() {
@@ -113,6 +117,38 @@ public class MainActivity extends BaseActivity {
         if (checkedId == R.id.rb_main_magzine) {
             rgMain.check(R.id.rb_main_magzine);
         }
+        initSSMS();
+    }
+
+    private void initSSMS() {
+        // 如果希望在读取通信录的时候提示用户，可以添加下面的代码，并且必须在其他代码调用之前，否则不起作用；如果没这个需求，可以不加这行代码
+        //SMSSDK.setAskPermisionOnReadContact(boolShowInDialog)
+
+        // 创建EventHandler对象
+        eventHandler = new EventHandler() {
+            public void afterEvent(int event, int result, Object data) {
+                if (result == SMSSDK.RESULT_COMPLETE) {
+                    //回调完成
+                    if (event == SMSSDK.EVENT_SUBMIT_VERIFICATION_CODE) {
+                        //提交验证码成功
+                        @SuppressWarnings("unchecked") HashMap<String, Object> phoneMap = (HashMap<String, Object>) data;
+                        String country = (String) phoneMap.get("country");
+                        String phone = (String) phoneMap.get("phone");
+                      //  Log.d(TAG, "提交验证码成功--country=" + country + "--phone" + phone);
+                    } else if (event == SMSSDK.EVENT_GET_VERIFICATION_CODE) {
+                        //获取验证码成功
+                      //  Log.d(TAG, "获取验证码成功");
+                    } else if (event == SMSSDK.EVENT_GET_SUPPORTED_COUNTRIES) {
+                        //返回支持发送验证码的国家列表
+                    }
+                } else {
+                    ((Throwable) data).printStackTrace();
+                }
+            }
+        };
+
+        // 注册监听器
+        SMSSDK.registerEventHandler(eventHandler);
     }
 
     private void initFragment() {
@@ -200,4 +236,9 @@ public class MainActivity extends BaseActivity {
         return authorName;
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        SMSSDK.unregisterEventHandler(eventHandler);
+    }
 }

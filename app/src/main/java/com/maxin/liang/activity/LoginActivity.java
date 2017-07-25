@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.hyphenate.EMCallBack;
@@ -13,9 +14,19 @@ import com.hyphenate.exceptions.HyphenateException;
 import com.maxin.liang.R;
 import com.maxin.liang.common.Modle;
 import com.maxin.liang.login.UserInfo;
+import com.maxin.liang.utils.CountDownTimerUtils;
+
+import java.util.HashMap;
 
 import butterknife.Bind;
 import butterknife.OnClick;
+import cn.sharesdk.framework.Platform;
+import cn.sharesdk.framework.PlatformActionListener;
+import cn.sharesdk.framework.ShareSDK;
+import cn.sharesdk.tencent.qq.QQ;
+import cn.smssdk.EventHandler;
+import cn.smssdk.SMSSDK;
+import cn.smssdk.gui.RegisterPage;
 
 import static com.maxin.liang.utils.UiUtils.showToast;
 
@@ -32,10 +43,44 @@ public class LoginActivity extends BaseActivity {
     Button btnZhuce;
     @Bind(R.id.btn_login)
     Button btnLogin;
+    @Bind(R.id.iv_qq_login)
+    ImageView ivQqLogin;
+    @Bind(R.id.tv_yanzhengma)
+    TextView tvYanzhengma;
+
+    @Override
+    public void initView() {
+        super.initView();
+
+    }
 
     @Override
     public void initListener() {
+        tvYanzhengma.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                CountDownTimerUtils mCountDownTimerUtils = new CountDownTimerUtils(tvYanzhengma, 60000, 1000);
+                mCountDownTimerUtils.start();
 
+
+                RegisterPage registerPage = new RegisterPage();
+                registerPage.setRegisterCallback(new EventHandler() {
+                    public void afterEvent(int event, int result, Object data) {
+                        // 解析注册结果
+                        if (result == SMSSDK.RESULT_COMPLETE) {
+                            @SuppressWarnings("unchecked") HashMap<String, Object> phoneMap = (HashMap<String, Object>) data;
+                            String country = (String) phoneMap.get("country");
+                            String phone = (String) phoneMap.get("phone");
+                           // Log.d(TAG, "opeRegisterPager()--country=" + country + "--phone" + phone);
+                        }
+                    }
+                });
+                //registerPage.show(LoginActivity.this);
+                SMSSDK.getVerificationCode("+86", etZhanghao.getText()+"");
+            }
+
+
+        });
     }
 
     @Override
@@ -49,7 +94,7 @@ public class LoginActivity extends BaseActivity {
     }
 
 
-    @OnClick({R.id.login_back, R.id.btn_zhuce, R.id.btn_login})
+    @OnClick({R.id.login_back, R.id.btn_zhuce, R.id.btn_login, R.id.iv_qq_login})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.login_back:
@@ -60,7 +105,7 @@ public class LoginActivity extends BaseActivity {
                 final String pwd = etMima.getText().toString().trim();
 
                 //校验
-                if (TextUtils.isEmpty(pwd) || TextUtils.isEmpty(username)){
+                if (TextUtils.isEmpty(pwd) || TextUtils.isEmpty(username)) {
                     showToast("用户名或密码不能为空");
                     return;
                 }
@@ -69,7 +114,7 @@ public class LoginActivity extends BaseActivity {
                     @Override
                     public void run() {
                         try {
-                            EMClient.getInstance().createAccount(username,pwd);
+                            EMClient.getInstance().createAccount(username, pwd);
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
@@ -135,6 +180,42 @@ public class LoginActivity extends BaseActivity {
                     }
                 });
                 break;
+
+            case R.id.iv_qq_login:
+                Platform weibo = ShareSDK.getPlatform(QQ.NAME);
+//回调信息，可以在这里获取基本的授权返回的信息，但是注意如果做提示和UI操作要传到主线程handler里去执行
+                weibo.setPlatformActionListener(new PlatformActionListener() {
+
+                    @Override
+                    public void onError(Platform arg0, int arg1, Throwable arg2) {
+                        // TODO Auto-generated method stub
+                        arg2.printStackTrace();
+                    }
+
+                    @Override
+                    public void onComplete(Platform arg0, int arg1, HashMap<String, Object> arg2) {
+                        // TODO Auto-generated method stub
+                        //输出所有授权信息
+                        arg0.getDb().exportData();
+                    }
+
+                    @Override
+                    public void onCancel(Platform arg0, int arg1) {
+                        // TODO Auto-generated method stub
+
+                    }
+                });
+                //authorize与showUser单独调用一个即可
+                weibo.authorize();//单独授权,OnComplete返回的hashmap是空的
+                weibo.showUser(null);//授权并获取用户信息
+                //移除授权
+                //weibo.removeAccount(true);
+
+                finish();
+                break;
         }
     }
+
+
+
 }
