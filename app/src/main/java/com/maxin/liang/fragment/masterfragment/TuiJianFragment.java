@@ -24,16 +24,32 @@ import butterknife.ButterKnife;
 
 public class TuiJianFragment extends Fragment {
 
-    private final Context context;
-    private final MasterItemBean.DataBean.ItemsBean items;
+
+    private MasterItemBean.DataBean.ItemsBean items;
 
 
     @Bind(R.id.recyclerview_tuijian)
     RecyclerView recyclerviewLike;
     private LikeAdapter adapter;
-    public TuiJianFragment(Context context, MasterItemBean.DataBean.ItemsBean list) {
-        this.context = context;
-        items=list;
+    private Context context;
+
+    public static TuiJianFragment newInstance( MasterItemBean.DataBean.ItemsBean items) {
+        TuiJianFragment newFragment = new TuiJianFragment();
+        Bundle bundle = new Bundle();
+        //bundle.put("context", context);
+        bundle.putSerializable("items", items);
+        newFragment.setArguments(bundle);
+        return newFragment;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Bundle args = getArguments();
+        if(args!=null) {
+            items= (MasterItemBean.DataBean.ItemsBean) args.get("items");
+            context=getActivity();
+        }
     }
 
     @Nullable

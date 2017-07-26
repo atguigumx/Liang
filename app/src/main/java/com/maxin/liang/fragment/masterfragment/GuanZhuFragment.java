@@ -35,16 +35,31 @@ import static com.maxin.liang.adapter.MasterFragmentAdapter.MASTER_ID;
  */
 
 public class GuanZhuFragment extends Fragment {
-    private final Context context;
-    private final String url;
+    private Context context;
+    private  String url;
     @Bind(R.id.recyclerview_guanzhu)
     RecyclerView recyclerviewGuanzhu;
     private GuanZhuAdapter adapter;
+    public GuanZhuFragment(){
 
+    }
+    public static GuanZhuFragment newInstance( String guanzhuUrl) {
+        GuanZhuFragment newFragment = new GuanZhuFragment();
+        Bundle bundle = new Bundle();
+        //bundle.put("context", context);
+        bundle.putString("guanzhuUrl", guanzhuUrl);
+        newFragment.setArguments(bundle);
+        return newFragment;
+    }
 
-    public GuanZhuFragment(Context context, String guanzhuUrl) {
-        this.context = context;
-        url = guanzhuUrl;
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Bundle args = getArguments();
+        if(args!=null) {
+            url= (String) args.get("guanzhuUrl");
+            context=getActivity();
+        }
     }
 
     @Nullable

@@ -30,16 +30,29 @@ import okhttp3.Call;
 
 public class LikeFragment extends Fragment {
 
-    private final Context context;
-    private final String url;
+    private Context context;
+    private String url;
 
     @Bind(R.id.recyclerview_tuijian)
     RecyclerView recyclerviewLike;
     private TuiJianAdapter adapter;
+    public static LikeFragment newInstance( String guanzhuUrl) {
+        LikeFragment newFragment = new LikeFragment();
+        Bundle bundle = new Bundle();
+        //bundle.put("context", context);
+        bundle.putString("likezhuUrl", guanzhuUrl);
+        newFragment.setArguments(bundle);
+        return newFragment;
+    }
 
-    public LikeFragment(Context context, String likeUrl) {
-        this.context=context;
-        this.url=likeUrl;
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Bundle args = getArguments();
+        if(args!=null) {
+            url= (String) args.get("likezhuUrl");
+            context=getActivity();
+        }
     }
 
     @Nullable

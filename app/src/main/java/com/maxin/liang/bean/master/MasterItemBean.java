@@ -1,12 +1,13 @@
 package com.maxin.liang.bean.master;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by shkstart on 2017/7/8.
  */
 
-public class MasterItemBean {
+public class MasterItemBean implements Serializable{
 
     /**
      * meta : {"status":0,"server_time":"2017-07-08 11:18:45","account_id":0,"cost":0.020282983779907,"errdata":null,"errmsg":""}
@@ -42,7 +43,7 @@ public class MasterItemBean {
         this.data = data;
     }
 
-    public static class MetaBean {
+    public static class MetaBean implements Serializable{
         /**
          * status : 0
          * server_time : 2017-07-08 11:18:45
@@ -108,7 +109,7 @@ public class MasterItemBean {
         }
     }
 
-    public static class DataBean {
+    public static class DataBean implements Serializable{
         /**
          * has_more : false
          * num_items : 3
@@ -143,7 +144,7 @@ public class MasterItemBean {
             this.items = items;
         }
 
-        public static class ItemsBean {
+        public static class ItemsBean implements Serializable{
             /**
              * user_id : 12596
              * user_name : 山本耀司

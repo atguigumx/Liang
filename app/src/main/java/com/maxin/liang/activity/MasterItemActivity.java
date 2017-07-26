@@ -113,10 +113,10 @@ public class MasterItemActivity extends BaseActivity {
 
     private void initFragment() {
         list=new ArrayList<>();
-        list.add(new LikeFragment(MasterItemActivity.this,likeUrl));
-        list.add(new TuiJianFragment(MasterItemActivity.this, items));
-        list.add(new GuanZhuFragment(MasterItemActivity.this,guanzhuUrl));
-        list.add(new GuanZhuFragment(MasterItemActivity.this,fansUrl));
+        list.add(LikeFragment.newInstance(likeUrl));
+        list.add(TuiJianFragment.newInstance(items));
+        list.add(GuanZhuFragment.newInstance(guanzhuUrl));
+        list.add(GuanZhuFragment.newInstance(fansUrl));
     }
 
     @Override
