@@ -66,6 +66,17 @@ public class LiveActivity extends BaseActivity {
         return R.layout.activity_live;
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        //videoplayer.pause();
+        videoplayer.stopPlayback();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
 
 
+    }
 }
