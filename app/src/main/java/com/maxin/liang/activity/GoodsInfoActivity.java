@@ -190,10 +190,12 @@ public class GoodsInfoActivity extends BaseActivity {
     }
 
     private void showPopWindow() {
+
         skuInvs = items.getSku_inv();
         //是否登录过环信服务器
         boolean loggedInBefore = EMClient.getInstance().isLoggedInBefore();
         if (loggedInBefore) {
+            dao = Modle.getInstance().getManager().getShoppingCarDao();
             //登录过
             LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             View view = inflater.inflate(R.layout.popupwindow_add_product, null);
@@ -475,7 +477,7 @@ public class GoodsInfoActivity extends BaseActivity {
         String goodsId = getIntent().getStringExtra(POSITION);
         String goodsUrl = "http://mobile.iliangcang.com/goods/goodsDetail?app_key=Android&goods_id=" + goodsId + "&sig=430BD99E6C913B8B8C3ED109737ECF15|830952120106768&v=1.0";
         getDataFromNet(goodsUrl);
-        dao = Modle.getInstance().getManager().getShoppingCarDao();
+
     }
 
     private void getDataFromNet(String goodsInfoIdurl) {

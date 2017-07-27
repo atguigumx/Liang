@@ -76,7 +76,5 @@ public class LiveActivity extends BaseActivity {
     @Override
     public void onDestroy() {
         super.onDestroy();
-
-
     }
 }

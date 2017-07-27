@@ -26,7 +26,6 @@ public class Modle {
     public void init(Context context){
         this.context=context;
         accountDAO=new AccountDAO(context);
-
         //new GlobalListener(context);
     }
     private ExecutorService service=Executors.newCachedThreadPool();
@@ -41,6 +40,7 @@ public class Modle {
             manager.close();
         }
         manager = new DBHelperManager(context, userInfo.getUsername() + ".db");
+
     }
 
     public AccountDAO getAccountDAO(){

@@ -70,6 +70,8 @@ public class SplashActivity extends BaseActivity {
         if(loggedInBefore) {
             String currentUser = EMClient.getInstance().getCurrentUser();
             Modle.getInstance().loginSuccess(new UserInfo(currentUser,currentUser));
+        }else {
+
         }
     }
 
